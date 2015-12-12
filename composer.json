@@ -11,5 +11,8 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.1@dev"
+    },
+    "autoload": {
+        "psr-4": {"BlizzardApi\\": "src/"}
     }
 }
