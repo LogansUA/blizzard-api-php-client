@@ -2,9 +2,7 @@
 
 namespace BlizzardApi\Service;
 
-use BlizzardApi\BlizzardClient;
 use GuzzleHttp\Client;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Class World Of Warcraft
@@ -16,6 +14,11 @@ class WorldOfWarcraft extends AbstractService
     /**
      * {@inheritdoc}
      */
+    protected $blizzardClient;
+
+    /**
+     * {@inheritdoc}
+     */
     protected $serviceParam = '/wow';
 
     /**
@@ -23,25 +26,36 @@ class WorldOfWarcraft extends AbstractService
      *
      * Return list of all available pets in World of Warcraft
      *
-     * @param BlizzardClient $blizzardClient Configured blizzard client
-     * @param array          $options        Options
+     * @param array $options Options
      *
-     * @return StreamInterface
+     * @return array
      */
-    public function getPetList(BlizzardClient $blizzardClient, array $options = [])
+    public function getPetList(array $options = [])
     {
-        $defaultOption = [
-            'locale' => $blizzardClient->getLocale(),
-            'apiKey' => $blizzardClient->getApiKey(),
-        ];
+        $options = $this->generateQueryOptions($options);
 
-        if (isset($options['query'])) {
-            array_merge($options['query'], $defaultOption);
-        } else {
-            $options['query'] = $defaultOption;
-        }
+        $result = (new Client())->get($this->blizzardClient->getApiUrl().$this->getServiceParam().'/pet/', $options);
 
-        $result = (new Client())->get($blizzardClient->getApiUrl().$this->getServiceParam().'/pet/', $options);
+        return $result->getBody();
+    }
+
+    /**
+     * Get pet ability information by ID
+     *
+     * Return information about pet ability by given ability ID
+     *
+     * @param int   $abilityId Pet ability ID
+     * @param array $options   Options
+     *
+     * @return array
+     */
+    public function getPetAbilityInfo($abilityId = 0, array $options = [])
+    {
+        $options = $this->generateQueryOptions($options);
+
+        $requestUrl = $this->blizzardClient->getApiUrl().$this->getServiceParam().'/pet/ability/'.$abilityId;
+
+        $result = (new Client())->get($requestUrl, $options);
 
         return $result->getBody();
     }

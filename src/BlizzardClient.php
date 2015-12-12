@@ -3,7 +3,7 @@
 namespace BlizzardApi;
 
 /**
- * BlizzardClient Client
+ * Class Blizzard Client
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
@@ -17,6 +17,21 @@ class BlizzardClient
     private $apiUrl;
 
     /**
+     * @var string $apiKey API key
+     */
+    private $apiKey;
+
+    /**
+     * @var string $locale Locale
+     */
+    private $locale;
+
+    /**
+     * @var string $region Region
+     */
+    private $region;
+
+    /**
      * BlizzardClient constructor
      *
      * @param string $apiKey API key
@@ -27,7 +42,8 @@ class BlizzardClient
     {
         $this->apiKey = $apiKey;
         $this->locale = $locale;
-        $this->apiUrl = str_replace('region', strtolower($region), self::API_URL_PATTERN);
+
+        $this->updateApiUrl($region);
     }
 
     /**
@@ -86,5 +102,45 @@ class BlizzardClient
         $this->locale = $locale;
 
         return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return string Region
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * Set region
+     *
+     * @param string $region region
+     *
+     * @return $this
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        $this->updateApiUrl($region);
+
+        return $this;
+    }
+
+    /**
+     * Update API url
+     *
+     * Update API url by replacing region in API url pattern
+     *
+     * @param string $region Region
+     *
+     * @return $this
+     */
+    private function updateApiUrl($region)
+    {
+        $this->apiUrl = str_replace('region', strtolower($region), self::API_URL_PATTERN);
     }
 }
