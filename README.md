@@ -1,2 +1,3 @@
-# blizzard-api-client
-API client for Blizzard api
+# PHP Blizzard API Client
+API client for Blizzard API written in PHP
+

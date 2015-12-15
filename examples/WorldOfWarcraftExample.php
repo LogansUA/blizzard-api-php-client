@@ -2,8 +2,17 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$client = new \BlizzardApi\BlizzardClient('3hnw3qmca6bnc3x4japefbzhcd86smpr', 'ru_RU', 'EU');
+$client = new \BlizzardApi\BlizzardClient('3hnw3qmca6bnc3x4japefbzhcd86smpr', 'en_US', 'US');
 
 $worldOfWarcraft = new \BlizzardApi\Service\WorldOfWarcraft($client);
 
-echo $worldOfWarcraft->getPetAbilityInfo(156);
+$response = $worldOfWarcraft->getAchievement(2256);
+
+// Show status code
+var_dump($response->getStatusCode());
+
+// Show headers
+var_dump($response->getHeaders());
+
+// Show response body
+echo $response->getBody();
