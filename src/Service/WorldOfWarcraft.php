@@ -2,8 +2,6 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Client;
-
 /**
  * Class World Of Warcraft
  *
@@ -11,11 +9,6 @@ use GuzzleHttp\Client;
  */
 class WorldOfWarcraft extends AbstractService
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected $blizzardClient;
-
     /**
      * {@inheritdoc}
      */
@@ -34,9 +27,11 @@ class WorldOfWarcraft extends AbstractService
     {
         $options = $this->generateQueryOptions($options);
 
-        $result = (new Client())->get($this->blizzardClient->getApiUrl().$this->getServiceParam().'/pet/', $options);
+        $requestUrl = $this->blizzardClient->getApiUrl().$this->getServiceParam().'/pet/';
 
-        return $result->getBody();
+        $result = $this->blizzardClient->request($requestUrl, $options);
+
+        return $result;
     }
 
     /**
@@ -53,10 +48,10 @@ class WorldOfWarcraft extends AbstractService
     {
         $options = $this->generateQueryOptions($options);
 
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->getServiceParam().'/pet/ability/'.$abilityId;
+        $requestUrl = $this->blizzardClient->getApiUrl().$this->getServiceParam().'/pet/ability/'.(int) $abilityId;
 
-        $result = (new Client())->get($requestUrl, $options);
+        $result = $this->blizzardClient->request($requestUrl, $options);
 
-        return $result->getBody();
+        return $result;
     }
 }

@@ -74,10 +74,10 @@ abstract class AbstractService
     {
         $defaultOption = $this->getDefaultOptions();
 
-        if (isset($options['query'])) {
-            array_merge($options['query'], $defaultOption);
+        if (!empty($options)) {
+            array_merge($options, $defaultOption);
         } else {
-            $options['query'] = $defaultOption;
+            $options = $defaultOption;
         }
 
         return $options;

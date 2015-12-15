@@ -47,6 +47,35 @@ class BlizzardClient
     }
 
     /**
+     * Make request
+     *
+     * Send GET request to specific URL with parameters
+     *
+     * @param string $url        Request URL
+     * @param array  $parameters Array of URL parameters
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    public function request($url, $parameters)
+    {
+        $ch = curl_init();
+
+        $requestUrl = $requestUrl = $url.'?'.http_build_query($parameters);
+
+        curl_setopt($ch, CURLOPT_URL, $requestUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+
+        $result = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $result;
+    }
+
+    /**
      * Get apiUrl
      *
      * @return mixed ApiUrl
