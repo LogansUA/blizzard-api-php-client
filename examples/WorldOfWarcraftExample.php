@@ -6,7 +6,9 @@ $client = new \BlizzardApi\BlizzardClient('3hnw3qmca6bnc3x4japefbzhcd86smpr', 'e
 
 $worldOfWarcraft = new \BlizzardApi\Service\WorldOfWarcraft($client);
 
-$response = $worldOfWarcraft->getAchievement(2256);
+$response = $worldOfWarcraft->getGuild('test-realm', 'test-guild', [
+    'fields' => 'achievements,challenge',
+]);
 
 // Show status code
 var_dump($response->getStatusCode());
@@ -16,3 +18,4 @@ var_dump($response->getHeaders());
 
 // Show response body
 echo $response->getBody();
+
