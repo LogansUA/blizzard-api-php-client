@@ -37,30 +37,6 @@ abstract class AbstractService
     }
 
     /**
-     * Get service parameter
-     *
-     * @return string Service parameter
-     */
-    public function getServiceParam()
-    {
-        return $this->serviceParam;
-    }
-
-    /**
-     * Set service parameter
-     *
-     * @param string $serviceParam Service parameter
-     *
-     * @return $this
-     */
-    public function setServiceParam($serviceParam)
-    {
-        $this->serviceParam = $serviceParam;
-
-        return $this;
-    }
-
-    /**
      * Generate query options
      *
      * Setting default option to given options array if it does have 'query' key,
@@ -72,15 +48,17 @@ abstract class AbstractService
      */
     protected function generateQueryOptions(array $options = [])
     {
+        $result = [];
+
         $defaultOption = $this->getDefaultOptions();
 
-        if (isset($options['query'])) {
-            array_merge($options['query'], $defaultOption);
+        if (isset($options)) {
+            $result['query'] = $options + $defaultOption;
         } else {
-            $options['query'] = $defaultOption;
+            $result['query'] = $defaultOption;
         }
 
-        return $options;
+        return $result;
     }
 
     /**
