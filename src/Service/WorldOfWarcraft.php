@@ -2,7 +2,6 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -10,7 +9,7 @@ use GuzzleHttp\Psr7\Response;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class WorldOfWarcraft extends AbstractService
+class WorldOfWarcraft extends Service
 {
     /**
      * {@inheritdoc}
@@ -31,13 +30,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getAchievement($achievementId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/achievement/'.(int) $achievementId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/achievement/'.(int) $achievementId, $options);
     }
 
     // endregion Achievement API
@@ -60,13 +53,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getAuctionDataStatus($realm, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/auction/data/'.(string) $realm;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/auction/data/'.(string) $realm, $options);
     }
 
     // endregion Auction API
@@ -84,13 +71,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getPetList(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/pet/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/pet/', $options);
     }
 
     /**
@@ -106,13 +87,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getPetAbility($abilityId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/pet/ability/'.(int) $abilityId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/pet/ability/'.(int) $abilityId, $options);
     }
 
     /**
@@ -128,13 +103,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getPetSpecies($speciesId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/pet/species/'.(int) $speciesId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/pet/species/'.(int) $speciesId, $options);
     }
 
     /**
@@ -149,13 +118,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getPetStats($speciesId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/pet/stats/'.(int) $speciesId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/pet/stats/'.(int) $speciesId, $options);
     }
 
     // endregion Pet API
@@ -173,13 +136,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getMasterList(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/mount/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/mount/', $options);
     }
 
     // endregion Mount API
@@ -201,13 +158,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getRealmLeaderboard($realm, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/challenge/'.(string) $realm;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/challenge/'.(string) $realm, $options);
     }
 
     /**
@@ -222,13 +173,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getRegionLeaderboard(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/challenge/region/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/challenge/region/', $options);
     }
 
     // endregion Challenge Mode API
@@ -252,14 +197,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getCharacter($realm, $characterName, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $apiUrl     = $this->blizzardClient->getApiUrl().$this->serviceParam;
-        $requestUrl = $apiUrl.'/character/'.(string) $realm.'/'.(string) $characterName;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/character/'.(string) $realm.'/'.(string) $characterName, $options);
     }
 
     // endregion Character profile API
@@ -278,13 +216,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getItem($itemId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/item/'.(int) $itemId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/item/'.(int) $itemId, $options);
     }
 
     /**
@@ -299,13 +231,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getItemSet($setId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/item/set/'.(int) $setId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/item/set/'.(int) $setId, $options);
     }
 
     // endregion Item API
@@ -331,14 +257,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getGuild($realm, $guildName, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $apiUrl     = $this->blizzardClient->getApiUrl().$this->serviceParam;
-        $requestUrl = $apiUrl.'/guild/'.(string) $realm.'/'.(string) $guildName;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/guild/'.(string) $realm.'/'.(string) $guildName, $options);
     }
 
     // endregion Guild profile API
@@ -358,13 +277,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getLeaderboards($bracket, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/leaderboard/'.(string) $bracket;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/leaderboard/'.(string) $bracket, $options);
     }
 
     // endregion PVP API
@@ -383,13 +296,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getQuest($questId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/quest/'.(int) $questId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/quest/'.(int) $questId, $options);
     }
 
     // endregion Quest API
@@ -409,13 +316,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getRealmStatus(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/realm/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/realm/', $options);
     }
 
     // endregion Realm status API
@@ -434,13 +335,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getRecipe($recipeId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/recipe/'.(int) $recipeId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/recipe/'.(int) $recipeId, $options);
     }
 
     // endregion Recipe API
@@ -459,13 +354,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getSpell($spellId, array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/spell/'.(int) $spellId;
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/spell/'.(int) $spellId, $options);
     }
 
     // endregion Spell API
@@ -483,13 +372,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getBattlegroups(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/battlegroups/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/battlegroups/', $options);
     }
 
     /**
@@ -503,13 +386,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getCharacterRaces(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/character/races/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/character/races/', $options);
     }
 
     /**
@@ -523,13 +400,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getCharacterClasses(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/character/classes/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/character/classes/', $options);
     }
 
     /**
@@ -544,13 +415,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getCharacterAchievements(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/character/achievements/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/character/achievements/', $options);
     }
 
     /**
@@ -564,13 +429,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getGuildRewards(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/guild/rewards/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/guild/rewards/', $options);
     }
 
     /**
@@ -584,13 +443,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getGuildPerks(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/guild/perks/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/guild/perks/', $options);
     }
 
     /**
@@ -605,13 +458,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getGuildAchievements(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/guild/achievements/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/guild/achievements/', $options);
     }
 
     /**
@@ -625,13 +472,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getItemClasses(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/item/classes/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/item/classes/', $options);
     }
 
     /**
@@ -645,13 +486,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getTalents(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/talents/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/talents/', $options);
     }
 
     /**
@@ -665,13 +500,7 @@ class WorldOfWarcraft extends AbstractService
      */
     public function getPetTypes(array $options = [])
     {
-        $options = $this->generateQueryOptions($options);
-
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.'/data/pet/types/';
-
-        $result = (new Client())->get($requestUrl, $options);
-
-        return $result;
+        return $this->request('/data/pet/types/', $options);
     }
 
     // endregion Data resources API
