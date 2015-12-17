@@ -38,10 +38,11 @@ class BlizzardClient
      * @param string $locale Locale
      * @param string $region Region
      */
-    public function __construct($apiKey, $locale = 'en_US', $region = 'US')
+    public function __construct($apiKey, $locale = 'en_us', $region = 'us')
     {
         $this->apiKey = $apiKey;
-        $this->locale = $locale;
+        $this->locale = strtolower($locale);
+        $this->region = strtolower($region);
 
         $this->updateApiUrl($region);
     }
@@ -87,7 +88,7 @@ class BlizzardClient
      */
     public function getLocale()
     {
-        return $this->locale;
+        return strtolower($this->locale);
     }
 
     /**
@@ -99,7 +100,7 @@ class BlizzardClient
      */
     public function setLocale($locale)
     {
-        $this->locale = $locale;
+        $this->locale = strtolower($locale);
 
         return $this;
     }
@@ -111,7 +112,7 @@ class BlizzardClient
      */
     public function getRegion()
     {
-        return $this->region;
+        return strtolower($this->region);
     }
 
     /**
@@ -123,7 +124,7 @@ class BlizzardClient
      */
     public function setRegion($region)
     {
-        $this->region = $region;
+        $this->region = strtolower($region);
 
         $this->updateApiUrl($region);
 
