@@ -1,4 +1,4 @@
-# PHP Blizzard API Client
+# Blizzard API PHP Client
 API client for Blizzard API written in PHP. [Blizzard API Documentation](https://dev.battle.net/io-docs)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LogansUA/blizzard-api-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/LogansUA/blizzard-api-client/?branch=master)
@@ -29,10 +29,10 @@ require_once __DIR__.'/../vendor/autoload.php';
 $client = new \BlizzardApi\BlizzardClient('apiKey', 'locale', 'region');
 
 // Create API service and pass configured BlizzardClient in constructor
-$worldOfWarcraft = new \BlizzardApi\Service\WorldOfWarcraft($client);
+$wow = new \BlizzardApi\Service\WorldOfWarcraft($client);
 
 // Use any of service method
-$response = $worldOfWarcraft->getGuild('test-realm', 'test-guild', [
+$response = $wow->getGuild('test-realm', 'test-guild', [
     'fields' => 'achievements,challenge',
 ]);
 

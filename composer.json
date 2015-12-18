@@ -1,7 +1,7 @@
 {
     "name": "logansua/blizzard-api-client",
     "description": "API client for blizzard api",
-    "keywords": ["blizzard", "world of warcraft", "api", "php", "client"],
+    "keywords": ["blizzard", "world of warcraft", "api", "client"],
     "minimum-stability": "dev",
     "type": "library",
     "license": "MIT",
