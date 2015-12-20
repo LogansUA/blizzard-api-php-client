@@ -21,7 +21,13 @@ in the [Composer documentation](https://getcomposer.org/doc/00-intro.md).
 git clone https://github.com/LogansUA/blizzard-api-client.git
 ```
 
+## List of available API services
+* World of Warcraft
+* Diablo 3
+
 ## Example
+* World of Warcraft
+
 ```PHP
 require_once __DIR__.'/../vendor/autoload.php';
 
@@ -45,9 +51,26 @@ var_dump($response->getHeaders());
 // Show response body
 echo $response->getBody();
 ```
+* Diablo 3
 
-## List of available API services
-* World of Warcraft
+```PHP
+require_once __DIR__.'/../vendor/autoload.php';
+
+$client = new \BlizzardApi\BlizzardClient('apiKey', 'locale', 'region');
+
+$diablo = new \BlizzardApi\Service\Diablo($client);
+
+$response = $diablo->getItemDataById('Unique_Shoulder_103_x1');
+
+// Show status code
+var_dump($response->getStatusCode());
+
+// Show headers
+var_dump($response->getHeaders());
+
+// Show response body
+echo $response->getBody();
+```
 
 ## License
 This software is published under the [MIT License](https://github.com/LogansUA/blizzard-api-client/blob/master/LICENSE)
