@@ -4,11 +4,9 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $client = new \BlizzardApi\BlizzardClient('3hnw3qmca6bnc3x4japefbzhcd86smpr', 'en_US', 'US');
 
-$wow = new \BlizzardApi\Service\WorldOfWarcraft($client);
+$diablo = new \BlizzardApi\Service\Diablo($client);
 
-$response = $wow->getGuild('test-realm', 'test-guild', [
-    'fields' => 'achievements,challenge',
-]);
+$response = $diablo->getItemDataById('Unique_Shoulder_103_x1');
 
 // Show status code
 var_dump($response->getStatusCode());
