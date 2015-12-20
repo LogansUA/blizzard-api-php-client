@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$client = new \BlizzardApi\BlizzardClient('3hnw3qmca6bnc3x4japefbzhcd86smpr', 'en_US', 'US');
+$client = new \BlizzardApi\BlizzardClient('apiKey', 'locale', 'region');
 
 $wow = new \BlizzardApi\Service\WorldOfWarcraft($client);
 
