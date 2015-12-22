@@ -49,7 +49,7 @@ class Diablo extends Service
         return $this->request('/profile/'.(string) $battleTag.'/hero/'.(int) $heroId, $options);
     }
 
-    // end region Profile API
+    // endregion Profile API
 
     // region Data resources API
 
@@ -98,5 +98,5 @@ class Diablo extends Service
         return $this->request('/data/artisan/'.(string) $artisan, $options);
     }
 
-    // end region Data resources API
+    // endregion Data resources API
 }
