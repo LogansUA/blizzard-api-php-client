@@ -14,6 +14,11 @@ use GuzzleHttp\Psr7\Response;
 class Service
 {
     /**
+     * @var string $serviceType Blizzard service type
+     */
+    protected $serviceType;
+
+    /**
      * @var BlizzardClient $blizzardClient Configured blizzard client
      */
     protected $blizzardClient;

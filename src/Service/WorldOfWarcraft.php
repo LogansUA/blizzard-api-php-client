@@ -2,6 +2,11 @@
 
 namespace BlizzardApi\Service;
 
+use BlizzardApi\Model\BlizzardFactory;
+use BlizzardApi\Model\ModelFactory;
+use BlizzardApi\Model\WorldOfWarcraft\Achievement;
+use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
+use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftModel;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -16,6 +21,11 @@ class WorldOfWarcraft extends Service
      */
     protected $serviceParam = '/wow';
 
+    /**
+     * {@inheritdoc}
+     */
+    protected $serviceType = BlizzardFactory::WORLD_OF_WARCRAFT;
+
     // region Achievement API
 
     /**
@@ -26,11 +36,16 @@ class WorldOfWarcraft extends Service
      * @param int   $achievementId The ID of the achievement to retrieve
      * @param array $options       Options
      *
-     * @return Response
+     * @return Achievement
      */
     public function getAchievement($achievementId, array $options = [])
     {
-        return $this->request('/achievement/'.(int) $achievementId, $options);
+        $response = $this->request('/achievement/'.(int) $achievementId, $options);
+
+        /** @var WorldOfWarcraftFactory $wowFactory */
+        $wowFactory = (new ModelFactory())->getFactory($this->serviceType);
+
+        return $wowFactory->getModel(WorldOfWarcraftModel::ACHIEVEMENTS, $response);
     }
 
     // endregion Achievement API
