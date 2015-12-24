@@ -22,55 +22,9 @@ git clone https://github.com/LogansUA/blizzard-api-client.git
 ```
 
 ## List of available API services
-* World of Warcraft
-* Diablo 3
-
-## Example
-* World of Warcraft
-
-```PHP
-require_once __DIR__.'/../vendor/autoload.php';
-
-// Create a BlizzardClient with Blizzard application ApiKey
-$client = new \BlizzardApi\BlizzardClient('apiKey', 'locale', 'region');
-
-// Create API service and pass configured BlizzardClient in constructor
-$wow = new \BlizzardApi\Service\WorldOfWarcraft($client);
-
-// Use any of service method
-$response = $wow->getGuild('test-realm', 'test-guild', [
-    'fields' => 'achievements,challenge',
-]);
-
-// Show status code
-var_dump($response->getStatusCode());
-
-// Show headers
-var_dump($response->getHeaders());
-
-// Show response body
-echo $response->getBody();
-```
-* Diablo 3
-
-```PHP
-require_once __DIR__.'/../vendor/autoload.php';
-
-$client = new \BlizzardApi\BlizzardClient('apiKey', 'locale', 'region');
-
-$diablo = new \BlizzardApi\Service\Diablo($client);
-
-$response = $diablo->getItemDataById('Unique_Shoulder_103_x1');
-
-// Show status code
-var_dump($response->getStatusCode());
-
-// Show headers
-var_dump($response->getHeaders());
-
-// Show response body
-echo $response->getBody();
-```
+* World of Warcraft ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/WorldOfWarcraftExample.php))
+* Diablo 3 ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/DiabloExample.php))
+* Starcraft ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/StarcraftExample.php))
 
 ## License
 This software is published under the [MIT License](https://github.com/LogansUA/blizzard-api-client/blob/master/LICENSE)
