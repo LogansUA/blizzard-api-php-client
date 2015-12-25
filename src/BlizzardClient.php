@@ -22,6 +22,11 @@ class BlizzardClient
     private $apiKey;
 
     /**
+     * @var string $accessToken Access token
+     */
+    private $accessToken;
+
+    /**
      * @var string $locale Locale
      */
     private $locale;
@@ -34,23 +39,25 @@ class BlizzardClient
     /**
      * BlizzardClient constructor
      *
-     * @param string $apiKey API key
-     * @param string $locale Locale
-     * @param string $region Region
+     * @param string      $apiKey      API key
+     * @param null|string $accessToken OAuth access token
+     * @param string      $locale      Locale
+     * @param string      $region      Region
      */
-    public function __construct($apiKey, $locale = 'en_us', $region = 'us')
+    public function __construct($apiKey, $accessToken = null, $locale = 'en_us', $region = 'us')
     {
-        $this->apiKey = $apiKey;
-        $this->locale = strtolower($locale);
-        $this->region = strtolower($region);
+        $this->apiKey      = $apiKey;
+        $this->accessToken = $accessToken;
+        $this->locale      = strtolower($locale);
+        $this->region      = strtolower($region);
 
         $this->updateApiUrl($region);
     }
 
     /**
-     * Get apiUrl
+     * Get api url
      *
-     * @return mixed ApiUrl
+     * @return string Api url
      */
     public function getApiUrl()
     {
@@ -58,9 +65,9 @@ class BlizzardClient
     }
 
     /**
-     * Get apiKey
+     * Get api key
      *
-     * @return string ApiKey
+     * @return string Api key
      */
     public function getApiKey()
     {
@@ -68,15 +75,39 @@ class BlizzardClient
     }
 
     /**
-     * Set apiKey
+     * Set api key
      *
-     * @param string $apiKey apiKey
+     * @param string $apiKey Api key
      *
      * @return $this
      */
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get access token
+     *
+     * @return null|string Access token
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Set access token
+     *
+     * @param null|string $accessToken Access token
+     *
+     * @return $this
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
 
         return $this;
     }

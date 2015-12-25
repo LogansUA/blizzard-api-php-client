@@ -1,6 +1,6 @@
 {
-    "name": "logansua/blizzard-api-client",
-    "description": "API client for blizzard api",
+    "name": "logansua/blizzard-api-php-client",
+    "description": "API client for blizzard API written in PHP",
     "keywords": ["blizzard", "world of warcraft", "api", "client"],
     "minimum-stability": "dev",
     "type": "library",

@@ -6,20 +6,17 @@ require_once __DIR__.'/../vendor/autoload.php';
 // Create a new Blizzard client with Blizzard API key (locale and region not required)
 $client = new \BlizzardApi\BlizzardClient('apiKey', 'accessToken', 'locale', 'region');
 
-// Create a new World Of Warcraft service with configured Blizzard client
-$wow = new \BlizzardApi\Service\WorldOfWarcraft($client);
+// Create a new GameData service with configured Blizzard client
+$gameData = new \BlizzardApi\Service\GameData($client);
 
 // Use API method for getting specific data
-$achievement = $wow->getAchievement(2144);
-
-// Object dump
-var_dump($achievement);
+$response = $gameData->getEraLeaderboard(1, 'rift-barbarian');
 
 // Show status code
-var_dump($achievement->getResponse()->getStatusCode());
+var_dump($response->getStatusCode());
 
 // Show headers
-var_dump($achievement->getResponse()->getHeaders());
+var_dump($response->getHeaders());
 
 // Show response body
-echo $achievement->getResponse()->getBody();
+echo $response->getBody();
