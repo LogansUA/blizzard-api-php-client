@@ -3,10 +3,9 @@
 namespace BlizzardApi\Service;
 
 use BlizzardApi\Model\BlizzardFactory;
-use BlizzardApi\Model\ServiceFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Achievement;
 use BlizzardApi\Model\WorldOfWarcraft\Auction;
-use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
+use BlizzardApi\Model\WorldOfWarcraft\Master;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftModel;
 use GuzzleHttp\Psr7\Response;
 
@@ -43,10 +42,7 @@ class WorldOfWarcraft extends Service
     {
         $response = $this->request('/achievement/'.(int) $achievementId, $options);
 
-        /** @var WorldOfWarcraftFactory $wowFactory */
-        $wowFactory = (new ServiceFactory())->getFactory($this->serviceType);
-
-        return $wowFactory->getModel(WorldOfWarcraftModel::ACHIEVEMENTS, $response);
+        return $this->createObject(WorldOfWarcraftModel::ACHIEVEMENTS, $response);
     }
 
     // endregion Achievement API
@@ -71,10 +67,7 @@ class WorldOfWarcraft extends Service
     {
         $response = $this->request('/auction/data/'.(string) $realm, $options);
 
-        /** @var WorldOfWarcraftFactory $wowFactory */
-        $wowFactory = (new ServiceFactory())->getFactory($this->serviceType);
-
-        return $wowFactory->getModel(WorldOfWarcraftModel::AUCTION_DATA_STATUS, $response);
+        return $this->createObject(WorldOfWarcraftModel::AUCTION_DATA_STATUS, $response);
     }
 
     // endregion Auction API
@@ -88,11 +81,13 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return Master
      */
     public function getPetList(array $options = [])
     {
-        return $this->request('/pet/', $options);
+        $response = $this->request('/pet/', $options);
+
+        return $this->createObject(WorldOfWarcraftModel::MASTER_LIST, $response);
     }
 
     /**

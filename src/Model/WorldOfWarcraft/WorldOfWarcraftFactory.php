@@ -24,6 +24,7 @@ class WorldOfWarcraftFactory
         $models = [
             WorldOfWarcraftModel::ACHIEVEMENTS        => new Achievement(),
             WorldOfWarcraftModel::AUCTION_DATA_STATUS => new Auction(),
+            WorldOfWarcraftModel::MASTER_LIST         => new Master(),
         ];
 
         /** @var AbstractModel $model */

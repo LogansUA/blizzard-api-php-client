@@ -3,6 +3,8 @@
 namespace BlizzardApi\Service;
 
 use BlizzardApi\BlizzardClient;
+use BlizzardApi\Model\ServiceFactory;
+use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
@@ -62,6 +64,24 @@ class Service
         $result = (new Client())->get($requestUrl, $options);
 
         return $result;
+    }
+
+    /**
+     * Create object
+     *
+     * Create result object from API response
+     *
+     * @param string   $modelType Model type
+     * @param Response $response  API response
+     *
+     * @return object
+     */
+    protected function createObject($modelType, $response)
+    {
+        /** @var WorldOfWarcraftFactory $wowFactory */
+        $wowFactory = (new ServiceFactory())->getFactory($this->serviceType);
+
+        return $wowFactory->getModel($modelType, $response);
     }
 
     /**

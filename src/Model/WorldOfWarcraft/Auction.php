@@ -2,8 +2,6 @@
 
 namespace BlizzardApi\Model\WorldOfWarcraft;
 
-use GuzzleHttp\Psr7\Response;
-
 /**
  * Auction class
  *
@@ -12,14 +10,14 @@ use GuzzleHttp\Psr7\Response;
 class Auction extends AbstractModel
 {
     /**
-     * @var array $files Files
+     * @var AuctionFile[] $files Files
      */
     private $files;
 
     /**
      * Get files
      *
-     * @return array Files
+     * @return AuctionFile[] Files
      */
     public function getFiles()
     {
@@ -36,6 +34,20 @@ class Auction extends AbstractModel
     public function setFiles($files)
     {
         $this->files = $files;
+
+        return $this;
+    }
+
+    /**
+     * Add file
+     *
+     * @param AuctionFile $auctionFile Auction file
+     *
+     * @return $this
+     */
+    public function addFile(AuctionFile $auctionFile)
+    {
+        $this->files[] = $auctionFile;
 
         return $this;
     }
