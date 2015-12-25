@@ -22,6 +22,11 @@ class BlizzardClient
     private $apiKey;
 
     /**
+     * @var string $accessToken Access token
+     */
+    private $accessToken;
+
+    /**
      * @var string $locale Locale
      */
     private $locale;
