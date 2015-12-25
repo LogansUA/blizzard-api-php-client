@@ -4,7 +4,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 // Create a new Blizzard client with Blizzard API key (locale and region not required)
-$client = new \BlizzardApi\BlizzardClient('apiKey', 'locale', 'region');
+$client = new \BlizzardApi\BlizzardClient('apiKey', 'accessToken', 'locale', 'region');
 
 // Create a new Starcraft service with configured Blizzard client
 $starcraft = new \BlizzardApi\Service\Starcraft($client);
