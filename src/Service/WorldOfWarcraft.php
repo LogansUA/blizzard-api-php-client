@@ -3,8 +3,9 @@
 namespace BlizzardApi\Service;
 
 use BlizzardApi\Model\BlizzardFactory;
-use BlizzardApi\Model\ModelFactory;
+use BlizzardApi\Model\ServiceFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Achievement;
+use BlizzardApi\Model\WorldOfWarcraft\Auction;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftModel;
 use GuzzleHttp\Psr7\Response;
@@ -43,7 +44,7 @@ class WorldOfWarcraft extends Service
         $response = $this->request('/achievement/'.(int) $achievementId, $options);
 
         /** @var WorldOfWarcraftFactory $wowFactory */
-        $wowFactory = (new ModelFactory())->getFactory($this->serviceType);
+        $wowFactory = (new ServiceFactory())->getFactory($this->serviceType);
 
         return $wowFactory->getModel(WorldOfWarcraftModel::ACHIEVEMENTS, $response);
     }
@@ -64,11 +65,16 @@ class WorldOfWarcraft extends Service
      * @param string $realm   The realm being requested
      * @param array  $options Options
      *
-     * @return Response
+     * @return Auction
      */
     public function getAuctionDataStatus($realm, array $options = [])
     {
-        return $this->request('/auction/data/'.(string) $realm, $options);
+        $response = $this->request('/auction/data/'.(string) $realm, $options);
+
+        /** @var WorldOfWarcraftFactory $wowFactory */
+        $wowFactory = (new ServiceFactory())->getFactory($this->serviceType);
+
+        return $wowFactory->getModel(WorldOfWarcraftModel::AUCTION_DATA_STATUS, $response);
     }
 
     // endregion Auction API

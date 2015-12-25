@@ -2,14 +2,12 @@
 
 namespace BlizzardApi\Model\WorldOfWarcraft;
 
-use GuzzleHttp\Psr7\Response;
-
 /**
  * Class Achievement
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class Achievement
+class Achievement extends AbstractModel
 {
     /**
      * @var int $id ID
@@ -60,23 +58,6 @@ class Achievement
      * @var int $factionId Faction ID
      */
     private $factionId;
-
-    /**
-     * @var Response $response API Response
-     */
-    private $response;
-
-    /**
-     * Achievement constructor
-     *
-     * @param Response $response Response
-     */
-    public function __construct($response)
-    {
-        $this->response = $response;
-
-        $this->fillObject();
-    }
 
     /**
      * Get ID
@@ -347,32 +328,22 @@ class Achievement
     }
 
     /**
-     * Get response
-     *
-     * @return Response Response
+     * {@inheritdoc}
      */
-    public function getResponse()
+    protected function fillObject(array $data)
     {
-        return $this->response;
-    }
-
-    /**
-     * Fill object
-     */
-    private function fillObject()
-    {
-        $data = json_decode((string) $this->response->getBody(), true);
-
-        $this->setId($data['id'])
-             ->setTitle($data['title'])
-             ->setPoints($data['points'])
-             ->setDescription($data['description'])
-             ->setRewardName($data['reward'])
-             ->setRewardItems($this->createRewardItems($data['rewardItems']))
-             ->setIcon($data['icon'])
-             ->setCriteria($this->createCriteria($data['criteria']))
-             ->setIsAccountWide($data['accountWide'])
-             ->setFactionId($data['factionId']);
+        if (!empty($data)) {
+            $this->setId($data['id'])
+                 ->setTitle($data['title'])
+                 ->setPoints($data['points'])
+                 ->setDescription($data['description'])
+                 ->setRewardName($data['reward'])
+                 ->setRewardItems($this->createRewardItems($data['rewardItems']))
+                 ->setIcon($data['icon'])
+                 ->setCriteria($this->createCriteria($data['criteria']))
+                 ->setIsAccountWide($data['accountWide'])
+                 ->setFactionId($data['factionId']);
+        }
     }
 
     /**
@@ -382,7 +353,7 @@ class Achievement
      *
      * @return array
      */
-    private function createRewardItems($rewardItems)
+    private function createRewardItems(array $rewardItems)
     {
         $achievementRewardItems = [];
 
@@ -412,7 +383,7 @@ class Achievement
      *
      * @return array
      */
-    private function createCriteria($criteria)
+    private function createCriteria(array $criteria)
     {
         $achievementSteps = [];
         foreach ($criteria as $step) {

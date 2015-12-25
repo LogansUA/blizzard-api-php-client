@@ -10,7 +10,7 @@ use GuzzleHttp\Psr7\Response;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class ModelFactory
+class ServiceFactory
 {
     /**
      * Get factory

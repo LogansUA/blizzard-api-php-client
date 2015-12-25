@@ -10,4 +10,5 @@ namespace BlizzardApi\Model\WorldOfWarcraft;
 final class WorldOfWarcraftModel
 {
     const ACHIEVEMENTS = 'achievements';
+    const AUCTION_DATA_STATUS = 'auction_data_status';
 }

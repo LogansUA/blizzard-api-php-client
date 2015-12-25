@@ -22,9 +22,13 @@ class WorldOfWarcraftFactory
     public function getModel($modelType, $response)
     {
         $models = [
-            WorldOfWarcraftModel::ACHIEVEMENTS => new Achievement($response),
+            WorldOfWarcraftModel::ACHIEVEMENTS        => new Achievement(),
+            WorldOfWarcraftModel::AUCTION_DATA_STATUS => new Auction(),
         ];
 
-        return $models[$modelType];
+        /** @var AbstractModel $model */
+        $model = $models[$modelType];
+
+        return $model->initializeObject($response);
     }
 }
