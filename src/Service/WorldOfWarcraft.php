@@ -2,11 +2,14 @@
 
 namespace BlizzardApi\Service;
 
-use BlizzardApi\Model\BlizzardFactory;
+use BlizzardApi\Model\ServiceFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Achievement;
 use BlizzardApi\Model\WorldOfWarcraft\Auction;
 use BlizzardApi\Model\WorldOfWarcraft\Master;
-use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftModel;
+use BlizzardApi\Model\WorldOfWarcraft\PetAbility;
+use BlizzardApi\Model\WorldOfWarcraft\PetSpecies;
+use BlizzardApi\Model\WorldOfWarcraft\PetStats;
+use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -24,7 +27,7 @@ class WorldOfWarcraft extends Service
     /**
      * {@inheritdoc}
      */
-    protected $serviceType = BlizzardFactory::WORLD_OF_WARCRAFT;
+    protected $serviceType = ServiceFactory::WORLD_OF_WARCRAFT;
 
     // region Achievement API
 
@@ -42,7 +45,7 @@ class WorldOfWarcraft extends Service
     {
         $response = $this->request('/achievement/'.(int) $achievementId, $options);
 
-        return $this->createObject(WorldOfWarcraftModel::ACHIEVEMENTS, $response);
+        return $this->createObject(WorldOfWarcraftFactory::ACHIEVEMENTS, $response);
     }
 
     // endregion Achievement API
@@ -67,7 +70,7 @@ class WorldOfWarcraft extends Service
     {
         $response = $this->request('/auction/data/'.(string) $realm, $options);
 
-        return $this->createObject(WorldOfWarcraftModel::AUCTION_DATA_STATUS, $response);
+        return $this->createObject(WorldOfWarcraftFactory::AUCTION_DATA_STATUS, $response);
     }
 
     // endregion Auction API
@@ -87,7 +90,7 @@ class WorldOfWarcraft extends Service
     {
         $response = $this->request('/pet/', $options);
 
-        return $this->createObject(WorldOfWarcraftModel::MASTER_LIST, $response);
+        return $this->createObject(WorldOfWarcraftFactory::MASTER_LIST, $response);
     }
 
     /**
@@ -99,11 +102,13 @@ class WorldOfWarcraft extends Service
      * @param int   $abilityId The ID of the ability you want to retrieve
      * @param array $options   Options
      *
-     * @return Response
+     * @return PetAbility
      */
     public function getPetAbility($abilityId, array $options = [])
     {
-        return $this->request('/pet/ability/'.(int) $abilityId, $options);
+        $response = $this->request('/pet/ability/'.(int) $abilityId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::PET_ABILITY, $response);
     }
 
     /**
@@ -115,11 +120,13 @@ class WorldOfWarcraft extends Service
      * @param int   $speciesId The species you want to retrieve data on
      * @param array $options   Options
      *
-     * @return Response
+     * @return PetSpecies
      */
     public function getPetSpecies($speciesId, array $options = [])
     {
-        return $this->request('/pet/species/'.(int) $speciesId, $options);
+        $response = $this->request('/pet/species/'.(int) $speciesId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::PET_SPECIES, $response);
     }
 
     /**
@@ -128,13 +135,24 @@ class WorldOfWarcraft extends Service
      * Retrieve detailed information about a given species of pet
      *
      * @param int   $speciesId The pet's species ID. This can be found by querying a users' list of pets via the Character Profile API
+     * @param int   $level     The pet's level. Pet levels max out at 25
+     * @param int   $breedId   The pet's breed. Retrievable via the Character Profile API
+     * @param int   $qualityId The pet's quality. Retrievable via the Character Profile API. Pet quality can range from 0 to 5 (0 is poor quality and 5 is legendary)
      * @param array $options   Options
      *
-     * @return Response
+     * @return PetStats
      */
-    public function getPetStats($speciesId, array $options = [])
+    public function getPetStats($speciesId, $level = 1, $breedId = 3, $qualityId = 1, array $options = [])
     {
-        return $this->request('/pet/stats/'.(int) $speciesId, $options);
+        $options += [
+            'level'     => $level,
+            'breedId'   => $breedId,
+            'qualityId' => $qualityId,
+        ];
+
+        $response = $this->request('/pet/stats/'.(int) $speciesId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::PET_STATS, $response);
     }
 
     // endregion Pet API

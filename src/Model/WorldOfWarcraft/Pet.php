@@ -62,7 +62,7 @@ class Pet
     /**
      * Get can battle
      *
-     * @return boolean Can battle
+     * @return bool Can battle
      */
     public function canBattle()
     {
@@ -72,7 +72,7 @@ class Pet
     /**
      * Set can battle
      *
-     * @param boolean $canBattle Can battle
+     * @param bool $canBattle Can battle
      *
      * @return $this
      */

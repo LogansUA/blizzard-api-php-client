@@ -7,7 +7,7 @@ namespace BlizzardApi\Model\WorldOfWarcraft;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class PetStats
+class PetStats extends AbstractModel
 {
     /**
      * @var int $speciesId Species ID
@@ -210,5 +210,21 @@ class PetStats
         $this->speed = $speed;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function fillObject(array $data)
+    {
+        if (!empty($data)) {
+            $this->setSpeciesId($data['speciesId'])
+                ->setBreedId($data['breedId'])
+                ->setPetQualityId($data['petQualityId'])
+                ->setLevel($data['level'])
+                ->setHealth($data['health'])
+                ->setPower($data['power'])
+                ->setSpeed($data['speed']);
+        }
     }
 }

@@ -11,6 +11,13 @@ use GuzzleHttp\Psr7\Response;
  */
 class WorldOfWarcraftFactory
 {
+    const ACHIEVEMENTS        = 'achievements';
+    const AUCTION_DATA_STATUS = 'auction_data_status';
+    const MASTER_LIST         = 'master_list';
+    const PET_ABILITY         = 'pet_ability';
+    const PET_SPECIES         = 'pet_species';
+    const PET_STATS           = 'pet_stats';
+
     /**
      * Get model
      *
@@ -22,9 +29,12 @@ class WorldOfWarcraftFactory
     public function getModel($modelType, $response)
     {
         $models = [
-            WorldOfWarcraftModel::ACHIEVEMENTS        => new Achievement(),
-            WorldOfWarcraftModel::AUCTION_DATA_STATUS => new Auction(),
-            WorldOfWarcraftModel::MASTER_LIST         => new Master(),
+            self::ACHIEVEMENTS        => new Achievement(),
+            self::AUCTION_DATA_STATUS => new Auction(),
+            self::MASTER_LIST         => new Master(),
+            self::PET_ABILITY         => new PetAbility(),
+            self::PET_SPECIES         => new PetSpecies(),
+            self::PET_STATS           => new PetStats(),
         ];
 
         /** @var AbstractModel $model */

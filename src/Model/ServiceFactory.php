@@ -3,7 +3,6 @@
 namespace BlizzardApi\Model;
 
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Class ModelFactory
@@ -12,6 +11,8 @@ use GuzzleHttp\Psr7\Response;
  */
 class ServiceFactory
 {
+    const WORLD_OF_WARCRAFT = 'world_of_warcraft';
+
     /**
      * Get factory
      *
@@ -22,7 +23,7 @@ class ServiceFactory
     public function getFactory($serviceType)
     {
         $models = [
-            BlizzardFactory::WORLD_OF_WARCRAFT => new WorldOfWarcraftFactory(),
+            self::WORLD_OF_WARCRAFT => new WorldOfWarcraftFactory(),
         ];
 
         return $models[$serviceType];

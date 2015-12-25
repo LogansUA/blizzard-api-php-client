@@ -282,7 +282,7 @@ class Achievement extends AbstractModel
     /**
      * Is account wide
      *
-     * @return boolean Is account wide
+     * @return bool Is account wide
      */
     public function isAccountWide()
     {
@@ -292,7 +292,7 @@ class Achievement extends AbstractModel
     /**
      * Set is account wide
      *
-     * @param boolean $isAccountWide Is account wide
+     * @param bool $isAccountWide Is account wide
      *
      * @return $this
      */
