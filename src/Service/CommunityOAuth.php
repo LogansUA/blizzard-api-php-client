@@ -2,7 +2,6 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
 /**
