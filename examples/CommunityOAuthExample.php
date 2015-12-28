@@ -4,10 +4,10 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 // Create a new Blizzard client with Blizzard API key
-$client = new \BlizzardApi\BlizzardClient('3hnw3qmca6bnc3x4japefbzhcd86smpr', 'vradys5bhcbe4c3cbv43285e', 'ru_RU', 'EU');
+$client = new \BlizzardApi\BlizzardClient('apiKey');
 
 // Create a new Diablo service with configured Blizzard client
-$diablo = new \BlizzardApi\Service\Starcraft($client);
+$diablo = new \BlizzardApi\Service\Starcraft($client->setAccessToken('accessToken'));
 
 // Use API method for getting specific data
 $response = $diablo->getProfileUser();
