@@ -12,7 +12,7 @@ API client for Blizzard API written in PHP. [Blizzard API Documentation](https:/
 ## Installation
 ### Method 1
 ```
-php composer.phar require logansua/blizzard-api-php-client
+composer require logansua/blizzard-api-client
 ```
 This command requires you to have Composer installed globally, as explained
 in the [Composer documentation](https://getcomposer.org/doc/00-intro.md).
