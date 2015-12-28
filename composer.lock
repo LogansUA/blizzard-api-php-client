@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "14e3991ec20be5083ac1e0fa4b0a9f8e",
-    "content-hash": "f7f314893315dc1db3f1662c408099df",
+    "hash": "6d15ecb9efb237f70598b1a18b4398d9",
+    "content-hash": "22ce6a954b080cf7d07e573f2d34bc72",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -229,25 +229,25 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "dev-master",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "0fb705c94d78e3f6b151f8e0b68c4bae89a13c51"
+                "reference": "e7f62cf7d9e48238299cfa5d0556aee8cff1e075"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/0fb705c94d78e3f6b151f8e0b68c4bae89a13c51",
-                "reference": "0fb705c94d78e3f6b151f8e0b68c4bae89a13c51",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/e7f62cf7d9e48238299cfa5d0556aee8cff1e075",
+                "reference": "e7f62cf7d9e48238299cfa5d0556aee8cff1e075",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9"
+                "php": ">=5.3.9"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
@@ -279,7 +279,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2015-11-30 21:39:17"
+            "time": "2015-11-18 13:45:00"
         }
     ],
     "packages-dev": [],
