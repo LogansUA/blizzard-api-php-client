@@ -3,11 +3,11 @@
 namespace BlizzardApi\Model\WorldOfWarcraft;
 
 /**
- * Master class
+ * Pet list class
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class Master extends AbstractModel
+class PetList extends AbstractModel
 {
     /**
      * @var Pet[] $pets Pets list

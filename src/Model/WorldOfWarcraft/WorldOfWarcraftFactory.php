@@ -13,10 +13,11 @@ class WorldOfWarcraftFactory
 {
     const ACHIEVEMENTS        = 'achievements';
     const AUCTION_DATA_STATUS = 'auction_data_status';
-    const MASTER_LIST         = 'master_list';
+    const PET_LIST            = 'pet_list';
     const PET_ABILITY         = 'pet_ability';
     const PET_SPECIES         = 'pet_species';
     const PET_STATS           = 'pet_stats';
+    const MOUNT_LIST          = 'mount_stats';
 
     /**
      * Get model
@@ -31,10 +32,11 @@ class WorldOfWarcraftFactory
         $models = [
             self::ACHIEVEMENTS        => new Achievement(),
             self::AUCTION_DATA_STATUS => new Auction(),
-            self::MASTER_LIST         => new Master(),
+            self::PET_LIST            => new PetList(),
             self::PET_ABILITY         => new PetAbility(),
             self::PET_SPECIES         => new PetSpecies(),
             self::PET_STATS           => new PetStats(),
+            self::MOUNT_LIST          => new MountList(),
         ];
 
         /** @var AbstractModel $model */

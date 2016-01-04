@@ -5,7 +5,8 @@ namespace BlizzardApi\Service;
 use BlizzardApi\Model\ServiceFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Achievement;
 use BlizzardApi\Model\WorldOfWarcraft\Auction;
-use BlizzardApi\Model\WorldOfWarcraft\Master;
+use BlizzardApi\Model\WorldOfWarcraft\MountList;
+use BlizzardApi\Model\WorldOfWarcraft\PetList;
 use BlizzardApi\Model\WorldOfWarcraft\PetAbility;
 use BlizzardApi\Model\WorldOfWarcraft\PetSpecies;
 use BlizzardApi\Model\WorldOfWarcraft\PetStats;
@@ -84,13 +85,13 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Master
+     * @return PetList
      */
     public function getPetList(array $options = [])
     {
         $response = $this->request('/pet/', $options);
 
-        return $this->createObject(WorldOfWarcraftFactory::MASTER_LIST, $response);
+        return $this->createObject(WorldOfWarcraftFactory::PET_LIST, $response);
     }
 
     /**
@@ -160,17 +161,19 @@ class WorldOfWarcraft extends Service
     // region Mound API
 
     /**
-     * Get master list
+     * Get mount list
      *
      * A list of all supported mounts
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return MountList
      */
-    public function getMasterList(array $options = [])
+    public function getMountList(array $options = [])
     {
-        return $this->request('/mount/', $options);
+        $response = $this->request('/mount/', $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::MOUNT_LIST, $response);
     }
 
     // endregion Mount API

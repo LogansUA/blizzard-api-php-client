@@ -5,7 +5,6 @@ API client for Blizzard API written in PHP. [Blizzard API Documentation](https:/
 [![Build Status](https://scrutinizer-ci.com/g/LogansUA/blizzard-api-php-client/badges/build.png?b=master)](https://scrutinizer-ci.com/g/LogansUA/blizzard-api-php-client/build-status/master)
 [![Latest Stable Version](https://poser.pugx.org/logansua/blizzard-api-client/v/stable)](https://packagist.org/packages/logansua/blizzard-api-client)
 [![Total Downloads](https://poser.pugx.org/logansua/blizzard-api-client/downloads)](https://packagist.org/packages/logansua/blizzard-api-client)
-[![Latest Unstable Version](https://poser.pugx.org/logansua/blizzard-api-client/v/unstable)](https://packagist.org/packages/logansua/blizzard-api-client)
 [![License](https://poser.pugx.org/logansua/blizzard-api-client/license)](https://packagist.org/packages/logansua/blizzard-api-client)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/b103523d-7f46-4c74-94f9-cf41462b298a/mini.png)](https://insight.sensiolabs.com/projects/b103523d-7f46-4c74-94f9-cf41462b298a)
 
