@@ -96,14 +96,10 @@ class Service
      */
     private function generateQueryOptions(array $options = [])
     {
-        $result = [];
-
-        $defaultOption = $this->getDefaultOptions();
-
-        if (isset($options)) {
-            $result['query'] = $options + $defaultOption;
+        if (isset($options['query'])) {
+            $result = $options['query'] + $this->getDefaultOptions();
         } else {
-            $result['query'] = $defaultOption;
+            $result['query'] = $options + $this->getDefaultOptions();
         }
 
         return $result;

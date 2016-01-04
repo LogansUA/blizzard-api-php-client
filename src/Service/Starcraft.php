@@ -121,4 +121,29 @@ class Starcraft extends Service
     }
 
     // endregion Data resources API
+
+    // region Community OAuth API
+
+    /**
+     * Get profile user
+     *
+     * This provides data about the current logged in OAuth user's Sc2 profile
+     *
+     * @param null|string $accessToken Authorized user access token
+     * @param array       $options     Options
+     *
+     * @return Response
+     */
+    public function getProfileUser($accessToken = null, array $options = [])
+    {
+        if (null === $accessToken) {
+            $options['access_token'] = $this->blizzardClient->getAccessToken();
+        } else {
+            $options['access_token'] = $accessToken;
+        }
+
+        return $this->request('/profile/user', $options);
+    }
+
+    // endregion Community OAuth API
 }

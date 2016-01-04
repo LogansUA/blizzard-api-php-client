@@ -2,6 +2,9 @@
 
 namespace BlizzardApi;
 
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 /**
  * Class Blizzard Client
  *
@@ -40,18 +43,30 @@ class BlizzardClient
      * BlizzardClient constructor
      *
      * @param string      $apiKey      API key
-     * @param null|string $accessToken OAuth access token
-     * @param string      $locale      Locale
      * @param string      $region      Region
+     * @param string      $locale      Locale
+     * @param null|string $accessToken OAuth access token
      */
-    public function __construct($apiKey, $accessToken = null, $locale = 'en_us', $region = 'us')
+    public function __construct($apiKey, $region = 'us', $locale = 'en_us', $accessToken = null)
     {
-        $this->apiKey      = $apiKey;
-        $this->accessToken = $accessToken;
-        $this->locale      = strtolower($locale);
-        $this->region      = strtolower($region);
+        $options = [
+            'apiKey'      => $apiKey,
+            'region'      => strtolower($region),
+            'locale'      => strtolower($locale),
+            'accessToken' => $accessToken,
+        ];
 
-        $this->updateApiUrl($region);
+        $resolver = (new OptionsResolver());
+        $this->configureOptions($resolver, $options['region']);
+
+        $options = $resolver->resolve($options);
+
+        $this->apiKey      = $options['apiKey'];
+        $this->region      = $options['region'];
+        $this->locale      = $options['locale'];
+        $this->accessToken = $options['accessToken'];
+
+        $this->updateApiUrl($options['region']);
     }
 
     /**
@@ -89,25 +104,27 @@ class BlizzardClient
     }
 
     /**
-     * Get access token
+     * Get region
      *
-     * @return null|string Access token
+     * @return string Region
      */
-    public function getAccessToken()
+    public function getRegion()
     {
-        return $this->accessToken;
+        return strtolower($this->region);
     }
 
     /**
-     * Set access token
+     * Set region
      *
-     * @param null|string $accessToken Access token
+     * @param string $region region
      *
      * @return $this
      */
-    public function setAccessToken($accessToken)
+    public function setRegion($region)
     {
-        $this->accessToken = $accessToken;
+        $this->region = strtolower($region);
+
+        $this->updateApiUrl($region);
 
         return $this;
     }
@@ -137,27 +154,25 @@ class BlizzardClient
     }
 
     /**
-     * Get region
+     * Get access token
      *
-     * @return string Region
+     * @return null|string Access token
      */
-    public function getRegion()
+    public function getAccessToken()
     {
-        return strtolower($this->region);
+        return $this->accessToken;
     }
 
     /**
-     * Set region
+     * Set access token
      *
-     * @param string $region region
+     * @param null|string $accessToken Access token
      *
      * @return $this
      */
-    public function setRegion($region)
+    public function setAccessToken($accessToken)
     {
-        $this->region = strtolower($region);
-
-        $this->updateApiUrl($region);
+        $this->accessToken = $accessToken;
 
         return $this;
     }
@@ -174,5 +189,36 @@ class BlizzardClient
     private function updateApiUrl($region)
     {
         $this->apiUrl = str_replace('region', strtolower($region), self::API_URL_PATTERN);
+    }
+
+    /**
+     * Configure options
+     *
+     * @param OptionsResolver $resolver Symfony options resolver
+     * @param string          $region   Region
+     *
+     * @throws InvalidOptionsException
+     */
+    private function configureOptions(OptionsResolver $resolver, $region)
+    {
+        if (isset(GeoData::$list[$region])) {
+            $locales = GeoData::$list[$region];
+        } else {
+            throw new InvalidOptionsException(
+                sprintf(
+                    'The option "region" with value "%s" is invalid. Accepted values are: "%s".',
+                    $region,
+                    implode('", "', array_keys(GeoData::$list))
+                )
+            );
+        }
+
+        $resolver->setRequired(['apiKey', 'region', 'locale', 'accessToken'])
+                 ->setAllowedTypes('apiKey', 'string')
+                 ->setAllowedTypes('region', 'string')
+                 ->setAllowedValues('region', array_keys(GeoData::$list))
+                 ->setAllowedTypes('locale', 'string')
+                 ->setAllowedValues('locale', $locales)
+                 ->setAllowedTypes('accessToken', ['null', 'string']);
     }
 }
