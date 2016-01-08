@@ -55,11 +55,11 @@ class PetList extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setPets($this->createPets($data['pets']));
-        }
+        $this->setPets($this->createPets($data['pets']));
+
+        return $this;
     }
 
     /**
@@ -71,43 +71,14 @@ class PetList extends AbstractModel
      */
     private function createPets(array $pets)
     {
-        $masterPets = [];
+        $result = [];
 
         foreach ($pets as $pet) {
-            $masterPet = (new Pet())
-                ->setCanBattle($pet['canBattle'])
-                ->setCreatureId($pet['creatureId'])
-                ->setName($pet['name'])
-                ->setFamily($pet['family'])
-                ->setIcon($pet['icon'])
-                ->setQualityId($pet['qualityId'])
-                ->setStats($this->createStats($pet['stats']))
-                ->setStrongAgainst($pet['strongAgainst'])
-                ->setTypeId($pet['typeId'])
-                ->setWeakAgainst($pet['weakAgainst']);
+            $masterPet = (new Pet())->fillObject($pet);
 
-            $masterPets[] = $masterPet;
+            $result[] = $masterPet;
         }
 
-        return $masterPets;
-    }
-
-    /**
-     * Create stats
-     *
-     * @param array $stats Creature stats
-     *
-     * @return PetStats[]
-     */
-    private function createStats(array $stats)
-    {
-        return (new PetStats())
-            ->setSpeciesId($stats['speciesId'])
-            ->setBreedId($stats['breedId'])
-            ->setPetQualityId($stats['petQualityId'])
-            ->setLevel($stats['level'])
-            ->setHealth($stats['health'])
-            ->setPower($stats['power'])
-            ->setSpeed($stats['speed']);
+        return $result;
     }
 }

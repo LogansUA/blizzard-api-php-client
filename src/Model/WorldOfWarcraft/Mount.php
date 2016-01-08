@@ -7,7 +7,7 @@ namespace BlizzardApi\Model\WorldOfWarcraft;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class Mount
+class Mount extends AbstractModel
 {
     /**
      * @var string $name Name
@@ -295,6 +295,25 @@ class Mount
     public function setJumping($jumping)
     {
         $this->jumping = $jumping;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fillObject(array $data)
+    {
+        $this->setName($data['name'])
+             ->setSpellId($data['spellId'])
+             ->setCreatureId($data['creatureId'])
+             ->setItemId($data['itemId'])
+             ->setQualityId($data['qualityId'])
+             ->setIcon($data['icon'])
+             ->setGround($data['isGround'])
+             ->setFlying($data['isFlying'])
+             ->setAquatic($data['isAquatic'])
+             ->setJumping($data['isJumping']);
 
         return $this;
     }

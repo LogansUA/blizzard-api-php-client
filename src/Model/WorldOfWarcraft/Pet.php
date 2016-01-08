@@ -7,7 +7,7 @@ namespace BlizzardApi\Model\WorldOfWarcraft;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class Pet
+class Pet extends AbstractModel
 {
     /**
      * @var bool $canBattle Is creature can battle
@@ -206,7 +206,7 @@ class Pet
     /**
      * Get stats
      *
-     * @return PetStats[] Stats
+     * @return PetStats Stats
      */
     public function getStats()
     {
@@ -216,27 +216,13 @@ class Pet
     /**
      * Set stats
      *
-     * @param PetStats[] $stats Stats
+     * @param PetStats $stats Stats
      *
      * @return $this
      */
     public function setStats($stats)
     {
         $this->stats = $stats;
-
-        return $this;
-    }
-
-    /**
-     * Add stats
-     *
-     * @param PetStats $stats Stats
-     *
-     * @return $this
-     */
-    public function addStats(PetStats $stats)
-    {
-        $this->stats[] = $stats;
 
         return $this;
     }
@@ -309,6 +295,25 @@ class Pet
     public function setWeakAgainst($weakAgainst)
     {
         $this->weakAgainst = $weakAgainst;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fillObject(array $data)
+    {
+        $this->setCanBattle($data['canBattle'])
+             ->setCreatureId($data['creatureId'])
+             ->setName($data['name'])
+             ->setFamily($data['family'])
+             ->setIcon($data['icon'])
+             ->setQualityId($data['qualityId'])
+             ->setStats((new PetStats())->fillObject($data['stats']))
+             ->setStrongAgainst($data['strongAgainst'])
+             ->setTypeId($data['typeId'])
+             ->setWeakAgainst($data['weakAgainst']);
 
         return $this;
     }

@@ -215,16 +215,16 @@ class PetStats extends AbstractModel
     /**
      * {@inheritDoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setSpeciesId($data['speciesId'])
-                ->setBreedId($data['breedId'])
-                ->setPetQualityId($data['petQualityId'])
-                ->setLevel($data['level'])
-                ->setHealth($data['health'])
-                ->setPower($data['power'])
-                ->setSpeed($data['speed']);
-        }
+        $this->setSpeciesId($data['speciesId'])
+             ->setBreedId($data['breedId'])
+             ->setPetQualityId($data['petQualityId'])
+             ->setLevel($data['level'])
+             ->setHealth($data['health'])
+             ->setPower($data['power'])
+             ->setSpeed($data['speed']);
+
+        return $this;
     }
 }

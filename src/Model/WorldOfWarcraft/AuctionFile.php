@@ -2,12 +2,14 @@
 
 namespace BlizzardApi\Model\WorldOfWarcraft;
 
+use DateTime;
+
 /**
  * AuctionFile class
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class AuctionFile
+class AuctionFile extends AbstractModel
 {
     /**
      * @var string $url URL to auctions
@@ -46,7 +48,7 @@ class AuctionFile
     /**
      * Get last modified
      *
-     * @return \DateTime Last modified
+     * @return DateTime Last modified
      */
     public function getLastModified()
     {
@@ -56,13 +58,25 @@ class AuctionFile
     /**
      * Set last modified
      *
-     * @param \DateTime $lastModified Last modified
+     * @param DateTime $lastModified Last modified
      *
      * @return $this
      */
-    public function setLastModified(\DateTime $lastModified)
+    public function setLastModified(DateTime $lastModified)
     {
         $this->lastModified = $lastModified;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fillObject(array $data)
+    {
+        /** @todo Change setting last modified */
+        $this->setUrl($data['url'])
+             ->setLastModified((new DateTime())->setTimestamp(substr($data['lastModified'], 0, -3)));
 
         return $this;
     }

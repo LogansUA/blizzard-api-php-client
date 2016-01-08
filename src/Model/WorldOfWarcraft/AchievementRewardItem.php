@@ -7,7 +7,7 @@ namespace BlizzardApi\Model\WorldOfWarcraft;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class AchievementRewardItem
+class AchievementRewardItem extends AbstractModel
 {
     /**
      * @var int $id ID
@@ -295,6 +295,25 @@ class AchievementRewardItem
     public function setBonusList($bonusList)
     {
         $this->bonusList = $bonusList;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fillObject(array $data)
+    {
+        $this->setId($data['id'])
+             ->setName($data['name'])
+             ->setIcon($data['icon'])
+             ->setQuality($data['quality'])
+             ->setItemLevel($data['itemLevel'])
+             ->setTooltipParams($data['tooltipParams'])
+             ->setStats($data['stats'])
+             ->setArmor($data['armor'])
+             ->setContext($data['context'])
+             ->setBonusList($data['bonusLists']);
 
         return $this;
     }

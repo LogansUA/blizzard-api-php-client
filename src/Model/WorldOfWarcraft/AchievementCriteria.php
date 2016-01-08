@@ -7,7 +7,7 @@ namespace BlizzardApi\Model\WorldOfWarcraft;
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class AchievementCriteria
+class AchievementCriteria extends AbstractModel
 {
     /**
      * @var int $id ID
@@ -121,6 +121,19 @@ class AchievementCriteria
     public function setMax($max)
     {
         $this->max = $max;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fillObject(array $data)
+    {
+        $this->setId($data['id'])
+             ->setDescription($data['description'])
+             ->setOrderIndex($data['orderIndex'])
+             ->setMax($data['max']);
 
         return $this;
     }

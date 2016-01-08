@@ -273,19 +273,19 @@ class PetSpecies extends AbstractModel
     /**
      * {@inheritDoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setSpeciesId($data['speciesId'])
-                 ->setPetTypeId($data['petTypeId'])
-                 ->setCreatureId($data['creatureId'])
-                 ->setName($data['name'])
-                 ->setCanBattle($data['canBattle'])
-                 ->setIcon($data['icon'])
-                 ->setDescription($data['description'])
-                 ->setSource($data['source'])
-                 ->setAbilities($this->createAbilities($data['abilities']));
-        }
+        $this->setSpeciesId($data['speciesId'])
+             ->setPetTypeId($data['petTypeId'])
+             ->setCreatureId($data['creatureId'])
+             ->setName($data['name'])
+             ->setCanBattle($data['canBattle'])
+             ->setIcon($data['icon'])
+             ->setDescription($data['description'])
+             ->setSource($data['source'])
+             ->setAbilities($this->createAbilities($data['abilities']));
+
+        return $this;
     }
 
     /**
@@ -297,25 +297,14 @@ class PetSpecies extends AbstractModel
      */
     private function createAbilities($abilities)
     {
-        $petAbilities = [];
+        $result = [];
 
         foreach ($abilities as $ability) {
-            $petAbility = (new PetAbility())
-                ->setId($ability['id'])
-                ->setName($ability['name'])
-                ->setIcon($ability['icon'])
-                ->setCooldown($ability['cooldown'])
-                ->setRounds($ability['rounds'])
-                ->setPetTypeId($ability['petTypeId'])
-                ->setIsPassive($ability['isPassive'])
-                ->setHideHints($ability['hideHints'])
-                ->setSlot($ability['slot'])
-                ->setOrder($ability['order'])
-                ->setRequiredLevel($ability['requiredLevel']);
+            $petAbility = (new PetAbility())->fillObject($ability);
 
-            $petAbilities[] = $petAbility;
+            $result[] = $petAbility;
         }
 
-        return $petAbilities;
+        return $result;
     }
 }

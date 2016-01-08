@@ -331,17 +331,21 @@ class PetAbility extends AbstractModel
     /**
      * {@inheritDoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setId($data['id'])
-                ->setName($data['name'])
-                ->setIcon($data['icon'])
-                ->setCooldown($data['cooldown'])
-                ->setRounds($data['rounds'])
-                ->setPetTypeId($data['petTypeId'])
-                ->setIsPassive($data['isPassive'])
-                ->setHideHints($data['hideHints']);
-        }
+        /** @todo Add normal data resolving */
+        $this->setId($data['id'])
+             ->setName($data['name'])
+             ->setIcon($data['icon'])
+             ->setCooldown($data['cooldown'])
+             ->setRounds($data['rounds'])
+             ->setPetTypeId($data['petTypeId'])
+             ->setIsPassive($data['isPassive'])
+             ->setHideHints($data['hideHints'])
+             ->setSlot(isset($data['slot']) ? $data['slot'] : null)
+             ->setOrder(isset($data['order']) ? $data['order'] : null)
+             ->setRequiredLevel(isset($data['requiredLevel']) ? $data['requiredLevel'] : null);
+
+        return $this;
     }
 }

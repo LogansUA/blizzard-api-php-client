@@ -39,27 +39,13 @@ class MountList extends AbstractModel
     }
 
     /**
-     * Add mount
-     *
-     * @param Mount $mount Mount
-     *
-     * @return $this
-     */
-    public function addMount(Mount $mount)
-    {
-        $this->mounts[] = $mount;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setMounts($this->createMounts($data['mounts']));
-        }
+        $this->setMounts($this->createMounts($data['mounts']));
+
+        return $this;
     }
 
     /**
@@ -67,28 +53,18 @@ class MountList extends AbstractModel
      *
      * @param array $mounts List of existing mounts
      *
-     * @return array
+     * @return Mount[]
      */
     private function createMounts(array $mounts)
     {
-        $mountsList = [];
+        $result = [];
 
         foreach ($mounts as $mount) {
-            $existingMount = (new Mount())
-                ->setName($mount['name'])
-                ->setSpellId($mount['spellId'])
-                ->setCreatureId($mount['creatureId'])
-                ->setItemId($mount['itemId'])
-                ->setQualityId($mount['qualityId'])
-                ->setIcon($mount['icon'])
-                ->setGround($mount['isGround'])
-                ->setFlying($mount['isFlying'])
-                ->setAquatic($mount['isAquatic'])
-                ->setJumping($mount['isJumping']);
+            $existingMount = (new Mount())->fillObject($mount);
 
-            $mountsList[] = $existingMount;
+            $result[] = $existingMount;
         }
 
-        return $mountsList;
+        return $result;
     }
 }

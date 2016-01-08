@@ -330,20 +330,20 @@ class Achievement extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setId($data['id'])
-                 ->setTitle($data['title'])
-                 ->setPoints($data['points'])
-                 ->setDescription($data['description'])
-                 ->setRewardName($data['reward'])
-                 ->setRewardItems($this->createRewardItems($data['rewardItems']))
-                 ->setIcon($data['icon'])
-                 ->setCriteria($this->createCriteria($data['criteria']))
-                 ->setIsAccountWide($data['accountWide'])
-                 ->setFactionId($data['factionId']);
-        }
+        $this->setId($data['id'])
+             ->setTitle($data['title'])
+             ->setPoints($data['points'])
+             ->setDescription($data['description'])
+             ->setRewardName($data['reward'])
+             ->setRewardItems($this->createRewardItems($data['rewardItems']))
+             ->setIcon($data['icon'])
+             ->setCriteria($this->createCriteria($data['criteria']))
+             ->setIsAccountWide($data['accountWide'])
+             ->setFactionId($data['factionId']);
+
+        return $this;
     }
 
     /**
@@ -351,29 +351,19 @@ class Achievement extends AbstractModel
      *
      * @param array $rewardItems Reward items
      *
-     * @return array
+     * @return AchievementRewardItem[]
      */
     private function createRewardItems(array $rewardItems)
     {
-        $achievementRewardItems = [];
+        $result = [];
 
         foreach ($rewardItems as $rewardItem) {
-            $achievementRewardItem = (new AchievementRewardItem())
-                ->setId($rewardItem['id'])
-                ->setName($rewardItem['name'])
-                ->setIcon($rewardItem['icon'])
-                ->setQuality($rewardItem['quality'])
-                ->setItemLevel($rewardItem['itemLevel'])
-                ->setTooltipParams($rewardItem['tooltipParams'])
-                ->setStats($rewardItem['stats'])
-                ->setArmor($rewardItem['armor'])
-                ->setContext($rewardItem['context'])
-                ->setBonusList($rewardItem['bonusLists']);
+            $achievementRewardItem = (new AchievementRewardItem())->fillObject($rewardItem);
 
-            $achievementRewardItems[] = $achievementRewardItem;
+            $result[] = $achievementRewardItem;
         }
 
-        return $achievementRewardItems;
+        return $result;
     }
 
     /**
@@ -381,21 +371,17 @@ class Achievement extends AbstractModel
      *
      * @param array $criteria List of criteria
      *
-     * @return array
+     * @return AchievementCriteria[]
      */
     private function createCriteria(array $criteria)
     {
-        $achievementSteps = [];
+        $result = [];
         foreach ($criteria as $step) {
-            $achievementCriteria = (new AchievementCriteria())
-                ->setId($step['id'])
-                ->setDescription($step['description'])
-                ->setOrderIndex($step['orderIndex'])
-                ->setMax($step['max']);
+            $achievementCriteria = (new AchievementCriteria())->fillObject($step);
 
-            $achievementSteps[] = $achievementCriteria;
+            $result[] = $achievementCriteria;
         }
 
-        return $achievementSteps;
+        return $result;
     }
 }

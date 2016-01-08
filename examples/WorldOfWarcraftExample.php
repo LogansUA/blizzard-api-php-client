@@ -10,12 +10,12 @@ $client = new \BlizzardApi\BlizzardClient('apiKey');
 $wow = new \BlizzardApi\Service\WorldOfWarcraft($client->setAccessToken('accessToken'));
 
 // Use API method for getting specific data
-$response = $wow->getGuild('test-realm', 'test-guild', [
-    'fields' => 'achievements,challenge',
-]);
+$achievement = $wow->getAchievement(2144);
 
-// $response->getStatusCode(); - accessing response status code
-// $response->getHeaders(); - accessing response headers
+// $achievement->getResponse()->getStatusCode(); - accessing response status code
+// $achievement->getResponse()->getHeaders(); - accessing response headers
 
 // Show response body
-echo $response->getBody();
+echo $achievement->getResponse()->getBody();
+
+echo $achievement->getDescription();

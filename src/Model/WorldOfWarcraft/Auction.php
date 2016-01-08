@@ -55,11 +55,11 @@ class Auction extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    protected function fillObject(array $data)
+    public function fillObject(array $data)
     {
-        if (!empty($data)) {
-            $this->setFiles($this->createFiles($data['files']));
-        }
+        $this->setFiles($this->createFiles($data['files']));
+
+        return $this;
     }
 
     /**
@@ -71,16 +71,14 @@ class Auction extends AbstractModel
      */
     private function createFiles(array $files)
     {
-        $auctionFiles = [];
+        $result = [];
 
         foreach ($files as $file) {
-            $auctionFile = (new AuctionFile())
-                ->setUrl($file['url'])
-                ->setLastModified((new \DateTime())->setTimestamp(substr($file['lastModified'], 0, -3)));
+            $auctionFile = (new AuctionFile())->fillObject($file);
 
-            $auctionFiles[] = $auctionFile;
+            $result[] = $auctionFile;
         }
 
-        return $auctionFiles;
+        return $result;
     }
 }
