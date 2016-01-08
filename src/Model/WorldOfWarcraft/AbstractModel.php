@@ -7,6 +7,8 @@ use GuzzleHttp\Psr7\Response;
 /**
  * AbstractModel class
  *
+ * @todo Move response variable
+ *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 abstract class AbstractModel
@@ -46,6 +48,8 @@ abstract class AbstractModel
      * Fill object
      *
      * @param array $data Decoded JSON response
+     *
+     * @return $this
      */
-    abstract protected function fillObject(array $data);
+    abstract public function fillObject(array $data);
 }

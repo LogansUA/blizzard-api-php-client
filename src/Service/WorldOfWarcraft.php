@@ -5,6 +5,7 @@ namespace BlizzardApi\Service;
 use BlizzardApi\Model\ServiceFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Achievement;
 use BlizzardApi\Model\WorldOfWarcraft\Auction;
+use BlizzardApi\Model\WorldOfWarcraft\Leaderboard;
 use BlizzardApi\Model\WorldOfWarcraft\MountList;
 use BlizzardApi\Model\WorldOfWarcraft\PetList;
 use BlizzardApi\Model\WorldOfWarcraft\PetAbility;
@@ -191,11 +192,13 @@ class WorldOfWarcraft extends Service
      * @param string $realm   The realm being requested
      * @param array  $options Options
      *
-     * @return Response
+     * @return Leaderboard
      */
     public function getRealmLeaderboard($realm, array $options = [])
     {
-        return $this->request('/challenge/'.(string) $realm, $options);
+        $response = $this->request('/challenge/'.(string) $realm, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::REALM_LEADERBOARD, $response);
     }
 
     /**

@@ -18,6 +18,7 @@ class WorldOfWarcraftFactory
     const PET_SPECIES         = 'pet_species';
     const PET_STATS           = 'pet_stats';
     const MOUNT_LIST          = 'mount_stats';
+    const REALM_LEADERBOARD   = 'realm_leaderboard';
 
     /**
      * Get model
@@ -37,6 +38,7 @@ class WorldOfWarcraftFactory
             self::PET_SPECIES         => new PetSpecies(),
             self::PET_STATS           => new PetStats(),
             self::MOUNT_LIST          => new MountList(),
+            self::REALM_LEADERBOARD   => new Leaderboard(),
         ];
 
         /** @var AbstractModel $model */
