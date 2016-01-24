@@ -432,7 +432,7 @@ class WorldOfWarcraft extends Service
     // region Data resources API
 
     /**
-     * Get battlegroups
+     * Get data battlegroups
      *
      * The battlegroups data API provides the list of battlegroups for this region. Please note the trailing '/' on this URL
      *
@@ -440,13 +440,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getBattlegroups(array $options = [])
+    public function getDataBattlegroups(array $options = [])
     {
         return $this->request('/data/battlegroups/', $options);
     }
 
     /**
-     * Get character races
+     * Get data character races
      *
      * The character races data API provides a list of each race and their associated faction, name, unique ID, and skin
      *
@@ -454,13 +454,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getCharacterRaces(array $options = [])
+    public function getDataCharacterRaces(array $options = [])
     {
-        return $this->request('/data/character/races/', $options);
+        return $this->request('/data/character/races', $options);
     }
 
     /**
-     * Get character classes
+     * Get data character classes
      *
      * The character classes data API provides a list of character classes
      *
@@ -468,13 +468,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getCharacterClasses(array $options = [])
+    public function getDataCharacterClasses(array $options = [])
     {
-        return $this->request('/data/character/classes/', $options);
+        return $this->request('/data/character/classes', $options);
     }
 
     /**
-     * Get character achievements
+     * Get data character achievements
      *
      * The character achievements data API provides a list of all of the achievements that characters can earn as well
      * as the category structure and hierarchy
@@ -483,13 +483,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getCharacterAchievements(array $options = [])
+    public function getDataCharacterAchievements(array $options = [])
     {
-        return $this->request('/data/character/achievements/', $options);
+        return $this->request('/data/character/achievements', $options);
     }
 
     /**
-     * Get guild rewards
+     * Get data guild rewards
      *
      * The guild rewards data API provides a list of all guild rewards
      *
@@ -497,13 +497,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getGuildRewards(array $options = [])
+    public function getDataGuildRewards(array $options = [])
     {
-        return $this->request('/data/guild/rewards/', $options);
+        return $this->request('/data/guild/rewards', $options);
     }
 
     /**
-     * Get guild perks
+     * Get data guild perks
      *
      * The guild perks data API provides a list of all guild perks
      *
@@ -511,13 +511,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getGuildPerks(array $options = [])
+    public function getDataGuildPerks(array $options = [])
     {
-        return $this->request('/data/guild/perks/', $options);
+        return $this->request('/data/guild/perks', $options);
     }
 
     /**
-     * Get guild achievements
+     * Get data guild achievements
      *
      * The guild achievements data API provides a list of all of the achievements that guilds can earn as well as the
      * category structure and hierarchy
@@ -526,13 +526,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getGuildAchievements(array $options = [])
+    public function getDataGuildAchievements(array $options = [])
     {
-        return $this->request('/data/guild/achievements/', $options);
+        return $this->request('/data/guild/achievements', $options);
     }
 
     /**
-     * Get item classes
+     * Get data item classes
      *
      * The item classes data API provides a list of item classes
      *
@@ -540,13 +540,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getItemClasses(array $options = [])
+    public function getDataItemClasses(array $options = [])
     {
-        return $this->request('/data/item/classes/', $options);
+        return $this->request('/data/item/classes', $options);
     }
 
     /**
-     * Get talents
+     * Get data talents
      *
      * The talents data API provides a list of talents, specs and glyphs for each class
      *
@@ -554,13 +554,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getTalents(array $options = [])
+    public function getDataTalents(array $options = [])
     {
-        return $this->request('/data/talents/', $options);
+        return $this->request('/data/talents', $options);
     }
 
     /**
-     * Get pet types
+     * Get data pet types
      *
      * The different bat pet types (including what they are strong and weak against)
      *
@@ -568,9 +568,9 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getPetTypes(array $options = [])
+    public function getDataPetTypes(array $options = [])
     {
-        return $this->request('/data/pet/types/', $options);
+        return $this->request('/data/pet/types', $options);
     }
 
     // endregion Data resources API
