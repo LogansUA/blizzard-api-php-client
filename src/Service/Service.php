@@ -19,17 +19,12 @@ class Service
     protected $blizzardClient;
 
     /**
-     * @var array $defaultOption Array of default options
-     */
-    protected $defaultOption = [];
-
-    /**
      * @var string $serviceParam Service parameter
      */
     protected $serviceParam;
 
     /**
-     * WorldOfWarcraft constructor
+     * Service constructor
      *
      * @param BlizzardClient $blizzardClient Configured blizzard client
      */
@@ -50,11 +45,13 @@ class Service
      */
     protected function request($urlSuffix, array $options)
     {
+        $client = new Client([
+            'base_uri' => $this->blizzardClient->getApiUrl(),
+        ]);
+
         $options = $this->generateQueryOptions($options);
 
-        $requestUrl = $this->blizzardClient->getApiUrl().$this->serviceParam.$urlSuffix;
-
-        $result = (new Client())->get($requestUrl, $options);
+        $result = $client->get($this->serviceParam.$urlSuffix, $options);
 
         return $result;
     }
@@ -89,11 +86,9 @@ class Service
      */
     private function getDefaultOptions()
     {
-        $defaultOption = [
+        return [
             'locale' => $this->blizzardClient->getLocale(),
             'apiKey' => $this->blizzardClient->getApiKey(),
         ];
-
-        return $defaultOption;
     }
 }
