@@ -77,6 +77,184 @@ class WorldOfWarcraft extends Service
 
     // endregion Auction API
 
+    // region Boss API
+
+    /**
+     * Get boss master list
+     *
+     * A list of all supported bosses. A 'boss' in this context should be considered a boss encounter, which may include
+     * more than one NPC.
+     *
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getBossMasterList(array $options = [])
+    {
+        return $this->request('/boss/', $options);
+    }
+
+    /**
+     * Get boss information by ID
+     *
+     * The boss API provides information about bosses. A 'boss' in this context should be considered a boss encounter,
+     * which may include more than one NPC.
+     *
+     * @param int   $bossId  The ID of the boss you want to retrieve
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getBoss($bossId, array $options = [])
+    {
+        return $this->request('/boss/'.(int) $bossId, $options);
+    }
+
+    // endregion Boss API
+
+    // region Challenge Mode API
+
+    /**
+     * Get realm leaderboards
+     *
+     * The data in this request has data for all 9 challenge mode maps (currently). The map field includes the current
+     * medal times for each dungeon. Inside each ladder we provide data about each character that was part of each run.
+     * The character data includes the current cached spec of the character while the member field includes the spec of
+     * the character during the challenge mode run.
+     *
+     * @param string $realm   The realm being requested
+     * @param array  $options Options
+     *
+     * @return Leaderboard
+     */
+    public function getRealmLeaderboard($realm, array $options = [])
+    {
+        $response = $this->request('/challenge/'.(string) $realm, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::REALM_LEADERBOARD, $response);
+    }
+
+    /**
+     * Get region leaderboards
+     *
+     * The region leaderboard has the exact same data format as the realm leaderboards except there is no realm field.
+     * It is simply the top 100 results gathered for each map for all of the available realm leaderboards in a region.
+     *
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getRegionLeaderboard(array $options = [])
+    {
+        return $this->request('/challenge/region/', $options);
+    }
+
+    // endregion Challenge Mode API
+
+    // region Character profile API
+
+    /**
+     * Get character
+     *
+     * The Character Profile API is the primary way to access character information. This Character Profile API can be
+     * used to fetch a single character at a time through an HTTP GET request to a URL describing the character profile
+     * resource. By default, a basic dataset will be returned and with each request and zero or more additional fields
+     * can be retrieved. To access this API, craft a resource URL pointing to the character who's information is to be
+     * retrieved
+     *
+     * @param string $realm         The character's realm. Can be provided as the proper realm name or the normalized realm name
+     * @param string $characterName The name of the character you want to retrieve
+     * @param array  $options       Options
+     *
+     * @return Response
+     */
+    public function getCharacter($realm, $characterName, array $options = [])
+    {
+        return $this->request('/character/'.(string) $realm.'/'.(string) $characterName, $options);
+    }
+
+    // endregion Character profile API
+
+    // region Guild profile API
+
+    /**
+     * Get guild profile
+     *
+     * The guild profile API is the primary way to access guild information. This guild profile API can be used to fetch
+     * a single guild at a time through an HTTP GET request to a url describing the guild profile resource. By default,
+     * a basic dataset will be returned and with each request and zero or more additional fields can be retrieved.
+     *
+     * There are no required query string parameters when accessing this resource, although the fields query string
+     * parameter can optionally be passed to indicate that one or more of the optional datasets is to be retrieved.
+     * Those additional fields are listed in the method titled "Optional Fields".
+     *
+     * @param string $realm     The realm the guild lives on
+     * @param string $guildName Name of the guild being queried
+     * @param array  $options   Options
+     *
+     * @return Response
+     */
+    public function getGuild($realm, $guildName, array $options = [])
+    {
+        return $this->request('/guild/'.(string) $realm.'/'.(string) $guildName, $options);
+    }
+
+    // endregion Guild profile API
+
+    // region Item API
+
+    /**
+     * Get item information by ID
+     *
+     * The item API provides detailed item information. This includes item set information if this item is part of a set.
+     *
+     * @param int   $itemId  Unique ID of the item being requested
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getItem($itemId, array $options = [])
+    {
+        return $this->request('/item/'.(int) $itemId, $options);
+    }
+
+    /**
+     * Get set information by ID
+     *
+     * The item API provides detailed item information. This includes item set information if this item is part of a set.
+     *
+     * @param int   $setId   Unique ID of the set being requested
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getItemSet($setId, array $options = [])
+    {
+        return $this->request('/item/set/'.(int) $setId, $options);
+    }
+
+    // endregion Item API
+
+    // region Mount API
+
+    /**
+     * Get mount list
+     *
+     * A list of all supported mounts
+     *
+     * @param array $options Options
+     *
+     * @return MountList
+     */
+    public function getMountList(array $options = [])
+    {
+        $response = $this->request('/mount/', $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::MOUNT_LIST, $response);
+    }
+
+    // endregion Mount API
+
     // region Pet API
 
     /**
@@ -158,149 +336,6 @@ class WorldOfWarcraft extends Service
     }
 
     // endregion Pet API
-
-    // region Mound API
-
-    /**
-     * Get mount list
-     *
-     * A list of all supported mounts
-     *
-     * @param array $options Options
-     *
-     * @return MountList
-     */
-    public function getMountList(array $options = [])
-    {
-        $response = $this->request('/mount/', $options);
-
-        return $this->createObject(WorldOfWarcraftFactory::MOUNT_LIST, $response);
-    }
-
-    // endregion Mount API
-
-    // region Challenge Mode API
-
-    /**
-     * Get realm leaderboards
-     *
-     * The data in this request has data for all 9 challenge mode maps (currently). The map field includes the current
-     * medal times for each dungeon. Inside each ladder we provide data about each character that was part of each run.
-     * The character data includes the current cached spec of the character while the member field includes the spec of
-     * the character during the challenge mode run.
-     *
-     * @param string $realm   The realm being requested
-     * @param array  $options Options
-     *
-     * @return Leaderboard
-     */
-    public function getRealmLeaderboard($realm, array $options = [])
-    {
-        $response = $this->request('/challenge/'.(string) $realm, $options);
-
-        return $this->createObject(WorldOfWarcraftFactory::REALM_LEADERBOARD, $response);
-    }
-
-    /**
-     * Get region leaderboards
-     *
-     * The region leaderboard has the exact same data format as the realm leaderboards except there is no realm field.
-     * It is simply the top 100 results gathered for each map for all of the available realm leaderboards in a region.
-     *
-     * @param array $options Options
-     *
-     * @return Response
-     */
-    public function getRegionLeaderboard(array $options = [])
-    {
-        return $this->request('/challenge/region/', $options);
-    }
-
-    // endregion Challenge Mode API
-
-    // region Character profile API
-
-    /**
-     * Get character
-     *
-     * The Character Profile API is the primary way to access character information. This Character Profile API can be
-     * used to fetch a single character at a time through an HTTP GET request to a URL describing the character profile
-     * resource. By default, a basic dataset will be returned and with each request and zero or more additional fields
-     * can be retrieved. To access this API, craft a resource URL pointing to the character who's information is to be
-     * retrieved
-     *
-     * @param string $realm         The character's realm. Can be provided as the proper realm name or the normalized realm name
-     * @param string $characterName The name of the character you want to retrieve
-     * @param array  $options       Options
-     *
-     * @return Response
-     */
-    public function getCharacter($realm, $characterName, array $options = [])
-    {
-        return $this->request('/character/'.(string) $realm.'/'.(string) $characterName, $options);
-    }
-
-    // endregion Character profile API
-
-    // region Item API
-
-    /**
-     * Get item information by ID
-     *
-     * The item API provides detailed item information. This includes item set information if this item is part of a set.
-     *
-     * @param int   $itemId  Unique ID of the item being requested
-     * @param array $options Options
-     *
-     * @return Response
-     */
-    public function getItem($itemId, array $options = [])
-    {
-        return $this->request('/item/'.(int) $itemId, $options);
-    }
-
-    /**
-     * Get set information by ID
-     *
-     * The item API provides detailed item information. This includes item set information if this item is part of a set.
-     *
-     * @param int   $setId   Unique ID of the set being requested
-     * @param array $options Options
-     *
-     * @return Response
-     */
-    public function getItemSet($setId, array $options = [])
-    {
-        return $this->request('/item/set/'.(int) $setId, $options);
-    }
-
-    // endregion Item API
-
-    // region Guild profile API
-
-    /**
-     * Get guild profile
-     *
-     * The guild profile API is the primary way to access guild information. This guild profile API can be used to fetch
-     * a single guild at a time through an HTTP GET request to a url describing the guild profile resource. By default,
-     * a basic dataset will be returned and with each request and zero or more additional fields can be retrieved.
-     *
-     * There are no required query string parameters when accessing this resource, although the fields query string
-     * parameter can optionally be passed to indicate that one or more of the optional datasets is to be retrieved.
-     * Those additional fields are listed in the method titled "Optional Fields".
-     *
-     * @param string $realm     The realm the guild lives on
-     * @param string $guildName Name of the guild being queried
-     * @param array  $options   Options
-     *
-     * @return Response
-     */
-    public function getGuild($realm, $guildName, array $options = [])
-    {
-        return $this->request('/guild/'.(string) $realm.'/'.(string) $guildName, $options);
-    }
-
-    // endregion Guild profile API
 
     // region PVP API
 
@@ -399,10 +434,45 @@ class WorldOfWarcraft extends Service
 
     // endregion Spell API
 
+    // region Zone API
+
+    /**
+     * Get zone master list
+     *
+     * A list of all supported zones and their bosses. A 'zone' in this context should be considered a dungeon, or a
+     * raid, not a zone as in a world zone. A 'boss' in this context should be considered a boss encounter, which may
+     * include more than one NPC.
+     *
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getZonesMasterList(array $options = [])
+    {
+        return $this->request('/zone/', $options);
+    }
+
+    /**
+     * Get zone information by ID
+     *
+     * The Zone API provides some information about zones.
+     *
+     * @param int   $zoneId  The ID of the zone you want to retrieve
+     * @param array $options Options
+     *
+     * @return Response
+     */
+    public function getZone($zoneId, array $options = [])
+    {
+        return $this->request('/zone/'.(int) $zoneId, $options);
+    }
+
+    // endregion Zone API
+
     // region Data resources API
 
     /**
-     * Get battlegroups
+     * Get data battlegroups
      *
      * The battlegroups data API provides the list of battlegroups for this region. Please note the trailing '/' on this URL
      *
@@ -410,13 +480,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getBattlegroups(array $options = [])
+    public function getDataBattlegroups(array $options = [])
     {
         return $this->request('/data/battlegroups/', $options);
     }
 
     /**
-     * Get character races
+     * Get data character races
      *
      * The character races data API provides a list of each race and their associated faction, name, unique ID, and skin
      *
@@ -424,13 +494,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getCharacterRaces(array $options = [])
+    public function getDataCharacterRaces(array $options = [])
     {
-        return $this->request('/data/character/races/', $options);
+        return $this->request('/data/character/races', $options);
     }
 
     /**
-     * Get character classes
+     * Get data character classes
      *
      * The character classes data API provides a list of character classes
      *
@@ -438,13 +508,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getCharacterClasses(array $options = [])
+    public function getDataCharacterClasses(array $options = [])
     {
-        return $this->request('/data/character/classes/', $options);
+        return $this->request('/data/character/classes', $options);
     }
 
     /**
-     * Get character achievements
+     * Get data character achievements
      *
      * The character achievements data API provides a list of all of the achievements that characters can earn as well
      * as the category structure and hierarchy
@@ -453,13 +523,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getCharacterAchievements(array $options = [])
+    public function getDataCharacterAchievements(array $options = [])
     {
-        return $this->request('/data/character/achievements/', $options);
+        return $this->request('/data/character/achievements', $options);
     }
 
     /**
-     * Get guild rewards
+     * Get data guild rewards
      *
      * The guild rewards data API provides a list of all guild rewards
      *
@@ -467,13 +537,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getGuildRewards(array $options = [])
+    public function getDataGuildRewards(array $options = [])
     {
-        return $this->request('/data/guild/rewards/', $options);
+        return $this->request('/data/guild/rewards', $options);
     }
 
     /**
-     * Get guild perks
+     * Get data guild perks
      *
      * The guild perks data API provides a list of all guild perks
      *
@@ -481,13 +551,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getGuildPerks(array $options = [])
+    public function getDataGuildPerks(array $options = [])
     {
-        return $this->request('/data/guild/perks/', $options);
+        return $this->request('/data/guild/perks', $options);
     }
 
     /**
-     * Get guild achievements
+     * Get data guild achievements
      *
      * The guild achievements data API provides a list of all of the achievements that guilds can earn as well as the
      * category structure and hierarchy
@@ -496,13 +566,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getGuildAchievements(array $options = [])
+    public function getDataGuildAchievements(array $options = [])
     {
-        return $this->request('/data/guild/achievements/', $options);
+        return $this->request('/data/guild/achievements', $options);
     }
 
     /**
-     * Get item classes
+     * Get data item classes
      *
      * The item classes data API provides a list of item classes
      *
@@ -510,13 +580,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getItemClasses(array $options = [])
+    public function getDataItemClasses(array $options = [])
     {
-        return $this->request('/data/item/classes/', $options);
+        return $this->request('/data/item/classes', $options);
     }
 
     /**
-     * Get talents
+     * Get data talents
      *
      * The talents data API provides a list of talents, specs and glyphs for each class
      *
@@ -524,13 +594,13 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getTalents(array $options = [])
+    public function getDataTalents(array $options = [])
     {
-        return $this->request('/data/talents/', $options);
+        return $this->request('/data/talents', $options);
     }
 
     /**
-     * Get pet types
+     * Get data pet types
      *
      * The different bat pet types (including what they are strong and weak against)
      *
@@ -538,9 +608,9 @@ class WorldOfWarcraft extends Service
      *
      * @return Response
      */
-    public function getPetTypes(array $options = [])
+    public function getDataPetTypes(array $options = [])
     {
-        return $this->request('/data/pet/types/', $options);
+        return $this->request('/data/pet/types', $options);
     }
 
     // endregion Data resources API
