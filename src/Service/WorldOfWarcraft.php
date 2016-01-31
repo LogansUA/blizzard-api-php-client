@@ -12,6 +12,7 @@ use BlizzardApi\Model\WorldOfWarcraft\PetAbility;
 use BlizzardApi\Model\WorldOfWarcraft\PetSpecies;
 use BlizzardApi\Model\WorldOfWarcraft\PetStats;
 use BlizzardApi\Model\WorldOfWarcraft\Quest;
+use BlizzardApi\Model\WorldOfWarcraft\Recipe;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use GuzzleHttp\Psr7\Response;
 
@@ -409,11 +410,13 @@ class WorldOfWarcraft extends Service
      * @param int   $recipeId Unique ID for the desired recipe
      * @param array $options  Options
      *
-     * @return Response
+     * @return Recipe
      */
     public function getRecipe($recipeId, array $options = [])
     {
-        return $this->request('/recipe/'.(int) $recipeId, $options);
+        $response = $this->request('/recipe/'.(int) $recipeId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::RECIPE, $response);
     }
 
     // endregion Recipe API

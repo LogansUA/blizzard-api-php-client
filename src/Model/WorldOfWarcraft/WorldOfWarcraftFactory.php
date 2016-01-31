@@ -20,6 +20,7 @@ class WorldOfWarcraftFactory
     const MOUNT_LIST          = 'mount_stats';
     const REALM_LEADERBOARD   = 'realm_leaderboard';
     const QUEST               = 'quest';
+    const RECIPE              = 'recipe';
 
     /**
      * Get model
@@ -41,6 +42,7 @@ class WorldOfWarcraftFactory
             self::MOUNT_LIST          => new MountList(),
             self::REALM_LEADERBOARD   => new Leaderboard(),
             self::QUEST               => new Quest(),
+            self::RECIPE              => new Recipe(),
         ];
 
         /** @var AbstractModel $model */
