@@ -2,6 +2,8 @@
 
 namespace BlizzardApi\Model\WorldOfWarcraft;
 
+use BlizzardApi\Model\WorldOfWarcraft\Item\Item;
+use BlizzardApi\Model\WorldOfWarcraft\Item\ItemSet;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -26,6 +28,8 @@ class WorldOfWarcraftFactory
     const BOSS                = 'boss';
     const ZONE_LIST           = 'zone_list';
     const ZONE                = 'zone';
+    const ITEM                = 'item';
+    const ITEM_SET            = 'item_set';
 
     /**
      * Get model
@@ -53,6 +57,8 @@ class WorldOfWarcraftFactory
             self::BOSS                => new Boss(),
             self::ZONE_LIST           => new ZoneList(),
             self::ZONE                => new Zone(),
+            self::ITEM                => new Item(),
+            self::ITEM_SET            => new ItemSet(),
         ];
 
         /** @var AbstractModel $model */

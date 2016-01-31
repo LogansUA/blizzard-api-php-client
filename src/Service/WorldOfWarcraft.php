@@ -7,6 +7,7 @@ use BlizzardApi\Model\WorldOfWarcraft\Achievement;
 use BlizzardApi\Model\WorldOfWarcraft\Auction;
 use BlizzardApi\Model\WorldOfWarcraft\Boss;
 use BlizzardApi\Model\WorldOfWarcraft\BossList;
+use BlizzardApi\Model\WorldOfWarcraft\Item\Item;
 use BlizzardApi\Model\WorldOfWarcraft\Leaderboard;
 use BlizzardApi\Model\WorldOfWarcraft\MountList;
 use BlizzardApi\Model\WorldOfWarcraft\PetList;
@@ -222,11 +223,13 @@ class WorldOfWarcraft extends Service
      * @param int   $itemId  Unique ID of the item being requested
      * @param array $options Options
      *
-     * @return Response
+     * @return Item
      */
     public function getItem($itemId, array $options = [])
     {
-        return $this->request('/item/'.(int) $itemId, $options);
+        $response = $this->request('/item/'.(int) $itemId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::ITEM, $response);
     }
 
     /**
@@ -241,7 +244,9 @@ class WorldOfWarcraft extends Service
      */
     public function getItemSet($setId, array $options = [])
     {
-        return $this->request('/item/set/'.(int) $setId, $options);
+        $response = $this->request('/item/set/'.(int) $setId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::ITEM_SET, $response);
     }
 
     // endregion Item API
