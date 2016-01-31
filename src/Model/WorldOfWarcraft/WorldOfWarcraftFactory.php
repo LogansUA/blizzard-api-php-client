@@ -22,6 +22,8 @@ class WorldOfWarcraftFactory
     const QUEST               = 'quest';
     const RECIPE              = 'recipe';
     const SPELL               = 'spell';
+    const BOSS_LIST           = 'boss_list';
+    const BOSS                = 'boss';
 
     /**
      * Get model
@@ -45,6 +47,8 @@ class WorldOfWarcraftFactory
             self::QUEST               => new Quest(),
             self::RECIPE              => new Recipe(),
             self::SPELL               => new Spell(),
+            self::BOSS_LIST           => new BossList(),
+            self::BOSS                => new Boss(),
         ];
 
         /** @var AbstractModel $model */

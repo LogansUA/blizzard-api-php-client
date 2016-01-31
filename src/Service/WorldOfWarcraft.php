@@ -5,6 +5,8 @@ namespace BlizzardApi\Service;
 use BlizzardApi\Model\ServiceFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Achievement;
 use BlizzardApi\Model\WorldOfWarcraft\Auction;
+use BlizzardApi\Model\WorldOfWarcraft\Boss;
+use BlizzardApi\Model\WorldOfWarcraft\BossList;
 use BlizzardApi\Model\WorldOfWarcraft\Leaderboard;
 use BlizzardApi\Model\WorldOfWarcraft\MountList;
 use BlizzardApi\Model\WorldOfWarcraft\PetList;
@@ -90,11 +92,13 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return BossList
      */
     public function getBossMasterList(array $options = [])
     {
-        return $this->request('/boss/', $options);
+        $response = $this->request('/boss/', $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::BOSS_LIST, $response);
     }
 
     /**
@@ -106,11 +110,13 @@ class WorldOfWarcraft extends Service
      * @param int   $bossId  The ID of the boss you want to retrieve
      * @param array $options Options
      *
-     * @return Response
+     * @return Boss
      */
     public function getBoss($bossId, array $options = [])
     {
-        return $this->request('/boss/'.(int) $bossId, $options);
+        $response = $this->request('/boss/'.(int) $bossId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::BOSS, $response);
     }
 
     // endregion Boss API
