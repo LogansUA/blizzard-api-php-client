@@ -13,6 +13,7 @@ use BlizzardApi\Model\WorldOfWarcraft\PetSpecies;
 use BlizzardApi\Model\WorldOfWarcraft\PetStats;
 use BlizzardApi\Model\WorldOfWarcraft\Quest;
 use BlizzardApi\Model\WorldOfWarcraft\Recipe;
+use BlizzardApi\Model\WorldOfWarcraft\Spell;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use GuzzleHttp\Psr7\Response;
 
@@ -431,11 +432,13 @@ class WorldOfWarcraft extends Service
      * @param int   $spellId Unique ID of the desired spell
      * @param array $options Options
      *
-     * @return Response
+     * @return Spell
      */
     public function getSpell($spellId, array $options = [])
     {
-        return $this->request('/spell/'.(int) $spellId, $options);
+        $response = $this->request('/spell/'.(int) $spellId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::SPELL, $response);
     }
 
     // endregion Spell API

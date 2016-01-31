@@ -21,6 +21,7 @@ class WorldOfWarcraftFactory
     const REALM_LEADERBOARD   = 'realm_leaderboard';
     const QUEST               = 'quest';
     const RECIPE              = 'recipe';
+    const SPELL               = 'spell';
 
     /**
      * Get model
@@ -43,6 +44,7 @@ class WorldOfWarcraftFactory
             self::REALM_LEADERBOARD   => new Leaderboard(),
             self::QUEST               => new Quest(),
             self::RECIPE              => new Recipe(),
+            self::SPELL               => new Spell(),
         ];
 
         /** @var AbstractModel $model */
