@@ -11,6 +11,7 @@ use BlizzardApi\Model\WorldOfWarcraft\PetList;
 use BlizzardApi\Model\WorldOfWarcraft\PetAbility;
 use BlizzardApi\Model\WorldOfWarcraft\PetSpecies;
 use BlizzardApi\Model\WorldOfWarcraft\PetStats;
+use BlizzardApi\Model\WorldOfWarcraft\Quest;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use GuzzleHttp\Psr7\Response;
 
@@ -367,11 +368,13 @@ class WorldOfWarcraft extends Service
      * @param int   $questId The ID of the desired quest
      * @param array $options Options
      *
-     * @return Response
+     * @return Quest
      */
     public function getQuest($questId, array $options = [])
     {
-        return $this->request('/quest/'.(int) $questId, $options);
+        $response = $this->request('/quest/'.(int) $questId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::QUEST, $response);
     }
 
     // endregion Quest API

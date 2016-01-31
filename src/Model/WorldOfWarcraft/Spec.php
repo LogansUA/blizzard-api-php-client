@@ -184,7 +184,7 @@ class Spec extends AbstractModel
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fillObject(array $data)
     {
