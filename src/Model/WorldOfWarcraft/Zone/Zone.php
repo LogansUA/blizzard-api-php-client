@@ -1,6 +1,8 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Zone;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
  * Class Zone

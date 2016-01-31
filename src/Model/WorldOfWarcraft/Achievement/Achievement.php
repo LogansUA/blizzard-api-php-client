@@ -1,6 +1,8 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Achievement;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
  * Class Achievement
@@ -45,7 +47,7 @@ class Achievement extends AbstractModel
     private $icon;
 
     /**
-     * @var AchievementCriteria[] $criteria Array of criteria
+     * @var Criteria[] $criteria Array of criteria
      */
     private $criteria;
 
@@ -182,7 +184,7 @@ class Achievement extends AbstractModel
     /**
      * Get reward items
      *
-     * @return AchievementRewardItem[] Reward items
+     * @return RewardItem[] Reward items
      */
     public function getRewardItems()
     {
@@ -192,7 +194,7 @@ class Achievement extends AbstractModel
     /**
      * Set reward items
      *
-     * @param AchievementRewardItem[] $rewardItems Reward items
+     * @param RewardItem[] $rewardItems Reward items
      *
      * @return $this
      */
@@ -206,11 +208,11 @@ class Achievement extends AbstractModel
     /**
      * Add reward item
      *
-     * @param AchievementRewardItem $rewardItem Reward item
+     * @param RewardItem $rewardItem Reward item
      *
      * @return $this
      */
-    public function addRewardItem(AchievementRewardItem $rewardItem)
+    public function addRewardItem(RewardItem $rewardItem)
     {
         $this->rewardItems[] = $rewardItem;
 
@@ -244,7 +246,7 @@ class Achievement extends AbstractModel
     /**
      * Get criteria
      *
-     * @return AchievementCriteria[] Criteria
+     * @return Criteria[] Criteria
      */
     public function getCriteria()
     {
@@ -254,7 +256,7 @@ class Achievement extends AbstractModel
     /**
      * Set criteria
      *
-     * @param AchievementCriteria[] $criteria Criteria
+     * @param Criteria[] $criteria Criteria
      *
      * @return $this
      */
@@ -268,11 +270,11 @@ class Achievement extends AbstractModel
     /**
      * Add criteria
      *
-     * @param AchievementCriteria $criteria Criteria
+     * @param Criteria $criteria Criteria
      *
      * @return $this
      */
-    public function addCriteria(AchievementCriteria $criteria)
+    public function addCriteria(Criteria $criteria)
     {
         $this->criteria[] = $criteria;
 
@@ -351,14 +353,14 @@ class Achievement extends AbstractModel
      *
      * @param array $rewardItems Reward items
      *
-     * @return AchievementRewardItem[]
+     * @return RewardItem[]
      */
     private function createRewardItems(array $rewardItems)
     {
         $result = [];
 
         foreach ($rewardItems as $rewardItem) {
-            $achievementRewardItem = (new AchievementRewardItem())->fillObject($rewardItem);
+            $achievementRewardItem = (new RewardItem())->fillObject($rewardItem);
 
             $result[] = $achievementRewardItem;
         }
@@ -371,13 +373,13 @@ class Achievement extends AbstractModel
      *
      * @param array $criteria List of criteria
      *
-     * @return AchievementCriteria[]
+     * @return Criteria[]
      */
     private function createCriteria(array $criteria)
     {
         $result = [];
         foreach ($criteria as $step) {
-            $achievementCriteria = (new AchievementCriteria())->fillObject($step);
+            $achievementCriteria = (new Criteria())->fillObject($step);
 
             $result[] = $achievementCriteria;
         }

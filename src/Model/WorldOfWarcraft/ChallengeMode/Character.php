@@ -1,6 +1,8 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\ChallengeMode;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
  * Class Character

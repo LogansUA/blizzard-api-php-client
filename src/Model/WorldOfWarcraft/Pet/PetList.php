@@ -1,6 +1,8 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Pet;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
  * Pet list class

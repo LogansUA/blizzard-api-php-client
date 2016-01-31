@@ -1,6 +1,8 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Mount;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
  * MountList class

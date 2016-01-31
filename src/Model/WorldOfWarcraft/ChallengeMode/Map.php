@@ -1,6 +1,9 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\ChallengeMode;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
+use BlizzardApi\Model\WorldOfWarcraft\Time;
 
 /**
  * Class Map

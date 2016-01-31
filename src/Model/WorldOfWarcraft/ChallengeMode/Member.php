@@ -1,11 +1,11 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\ChallengeMode;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
  * Class Member
- *
- * @todo Rename, because it's only Chllenge model
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */

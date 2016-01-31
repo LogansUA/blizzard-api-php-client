@@ -1,13 +1,15 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Achievement;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
- * Class AchievementCriteria
+ * Class Criteria
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class AchievementCriteria extends AbstractModel
+class Criteria extends AbstractModel
 {
     /**
      * @var int $id ID

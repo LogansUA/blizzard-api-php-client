@@ -1,13 +1,15 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Achievement;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
- * Class AchievementRewardItem
+ * Class RewardItem
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class AchievementRewardItem extends AbstractModel
+class RewardItem extends AbstractModel
 {
     /**
      * @var int $id ID

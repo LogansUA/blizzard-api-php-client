@@ -1,13 +1,15 @@
 <?php
 
-namespace BlizzardApi\Model\WorldOfWarcraft;
+namespace BlizzardApi\Model\WorldOfWarcraft\Boss;
+
+use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 
 /**
- * Class Location
+ * Class NPC
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class Location extends AbstractModel
+class NPC extends AbstractModel
 {
     /**
      * @var int $id ID
@@ -18,6 +20,11 @@ class Location extends AbstractModel
      * @var string $name Name
      */
     private $name;
+
+    /**
+     * @var string $urlSlug Url slug
+     */
+    private $urlSlug;
 
     /**
      * Get ID
@@ -68,12 +75,37 @@ class Location extends AbstractModel
     }
 
     /**
+     * Get url slug
+     *
+     * @return string Url slug
+     */
+    public function getUrlSlug()
+    {
+        return $this->urlSlug;
+    }
+
+    /**
+     * Set url slug
+     *
+     * @param string $urlSlug Url Slug
+     *
+     * @return $this
+     */
+    public function setUrlSlug($urlSlug)
+    {
+        $this->urlSlug = $urlSlug;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function fillObject(array $data)
     {
         $this->setId($data['id'])
-             ->setName($data['name']);
+             ->setName($data['name'])
+             ->setUrlSlug($data['urlSlug']);
 
         return $this;
     }

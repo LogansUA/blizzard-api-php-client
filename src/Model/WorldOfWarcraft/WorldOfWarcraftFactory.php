@@ -2,8 +2,20 @@
 
 namespace BlizzardApi\Model\WorldOfWarcraft;
 
+use BlizzardApi\Model\WorldOfWarcraft\Achievement\Achievement;
+use BlizzardApi\Model\WorldOfWarcraft\Auction\Auction;
+use BlizzardApi\Model\WorldOfWarcraft\Boss\Boss;
+use BlizzardApi\Model\WorldOfWarcraft\Boss\BossList;
+use BlizzardApi\Model\WorldOfWarcraft\ChallengeMode\Leaderboard;
 use BlizzardApi\Model\WorldOfWarcraft\Item\Item;
 use BlizzardApi\Model\WorldOfWarcraft\Item\ItemSet;
+use BlizzardApi\Model\WorldOfWarcraft\Mount\MountList;
+use BlizzardApi\Model\WorldOfWarcraft\Pet\PetAbility;
+use BlizzardApi\Model\WorldOfWarcraft\Pet\PetList;
+use BlizzardApi\Model\WorldOfWarcraft\Pet\PetSpecies;
+use BlizzardApi\Model\WorldOfWarcraft\Pet\PetStats;
+use BlizzardApi\Model\WorldOfWarcraft\Zone\Zone;
+use BlizzardApi\Model\WorldOfWarcraft\Zone\ZoneList;
 use GuzzleHttp\Psr7\Response;
 
 /**
