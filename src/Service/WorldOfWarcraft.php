@@ -17,6 +17,8 @@ use BlizzardApi\Model\WorldOfWarcraft\Quest;
 use BlizzardApi\Model\WorldOfWarcraft\Recipe;
 use BlizzardApi\Model\WorldOfWarcraft\Spell;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
+use BlizzardApi\Model\WorldOfWarcraft\Zone;
+use BlizzardApi\Model\WorldOfWarcraft\ZoneList;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -460,11 +462,13 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ZoneList
      */
     public function getZonesMasterList(array $options = [])
     {
-        return $this->request('/zone/', $options);
+        $reponse = $this->request('/zone/', $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::ZONE_LIST, $reponse);
     }
 
     /**
@@ -475,11 +479,13 @@ class WorldOfWarcraft extends Service
      * @param int   $zoneId  The ID of the zone you want to retrieve
      * @param array $options Options
      *
-     * @return Response
+     * @return Zone
      */
     public function getZone($zoneId, array $options = [])
     {
-        return $this->request('/zone/'.(int) $zoneId, $options);
+        $reponse = $this->request('/zone/'.(int) $zoneId, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::ZONE, $reponse);
     }
 
     // endregion Zone API

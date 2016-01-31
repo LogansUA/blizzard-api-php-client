@@ -24,6 +24,8 @@ class WorldOfWarcraftFactory
     const SPELL               = 'spell';
     const BOSS_LIST           = 'boss_list';
     const BOSS                = 'boss';
+    const ZONE_LIST           = 'zone_list';
+    const ZONE                = 'zone';
 
     /**
      * Get model
@@ -49,6 +51,8 @@ class WorldOfWarcraftFactory
             self::SPELL               => new Spell(),
             self::BOSS_LIST           => new BossList(),
             self::BOSS                => new Boss(),
+            self::ZONE_LIST           => new ZoneList(),
+            self::ZONE                => new Zone(),
         ];
 
         /** @var AbstractModel $model */
