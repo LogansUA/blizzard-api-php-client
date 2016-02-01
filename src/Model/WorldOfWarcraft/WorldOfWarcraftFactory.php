@@ -14,6 +14,7 @@ use BlizzardApi\Model\WorldOfWarcraft\Pet\PetAbility;
 use BlizzardApi\Model\WorldOfWarcraft\Pet\PetList;
 use BlizzardApi\Model\WorldOfWarcraft\Pet\PetSpecies;
 use BlizzardApi\Model\WorldOfWarcraft\Pet\PetStats;
+use BlizzardApi\Model\WorldOfWarcraft\Realm\Realms;
 use BlizzardApi\Model\WorldOfWarcraft\Zone\Zone;
 use BlizzardApi\Model\WorldOfWarcraft\Zone\ZoneList;
 use GuzzleHttp\Psr7\Response;
@@ -42,6 +43,7 @@ class WorldOfWarcraftFactory
     const ZONE                = 'zone';
     const ITEM                = 'item';
     const ITEM_SET            = 'item_set';
+    const REALM_STATUS        = 'realm_status';
 
     /**
      * Get model
@@ -71,6 +73,7 @@ class WorldOfWarcraftFactory
             self::ZONE                => new Zone(),
             self::ITEM                => new Item(),
             self::ITEM_SET            => new ItemSet(),
+            self::REALM_STATUS        => new Realms(),
         ];
 
         /** @var AbstractModel $model */

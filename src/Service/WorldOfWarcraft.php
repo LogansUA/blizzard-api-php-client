@@ -15,6 +15,7 @@ use BlizzardApi\Model\WorldOfWarcraft\Pet\PetAbility;
 use BlizzardApi\Model\WorldOfWarcraft\Pet\PetSpecies;
 use BlizzardApi\Model\WorldOfWarcraft\Pet\PetStats;
 use BlizzardApi\Model\WorldOfWarcraft\Quest;
+use BlizzardApi\Model\WorldOfWarcraft\Realm\Realms;
 use BlizzardApi\Model\WorldOfWarcraft\Recipe;
 use BlizzardApi\Model\WorldOfWarcraft\Spell;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
@@ -405,11 +406,13 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return Realms
      */
     public function getRealmStatus(array $options = [])
     {
-        return $this->request('/realm/', $options);
+        $response = $this->request('/realm/status', $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::REALM_STATUS, $response);
     }
 
     // endregion Realm status API
