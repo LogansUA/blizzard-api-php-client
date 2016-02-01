@@ -18,6 +18,7 @@ use BlizzardApi\Model\WorldOfWarcraft\Quest;
 use BlizzardApi\Model\WorldOfWarcraft\Realm\Realms;
 use BlizzardApi\Model\WorldOfWarcraft\Recipe;
 use BlizzardApi\Model\WorldOfWarcraft\Spell;
+use BlizzardApi\Model\WorldOfWarcraft\UserCharacters;
 use BlizzardApi\Model\WorldOfWarcraft\WorldOfWarcraftFactory;
 use BlizzardApi\Model\WorldOfWarcraft\Zone\Zone;
 use BlizzardApi\Model\WorldOfWarcraft\Zone\ZoneList;
@@ -404,12 +405,17 @@ class WorldOfWarcraft extends Service
      * whether or not the realm is up, the type and state of the realm, the current population, and the status of the
      * two world PvP zones
      *
-     * @param array $options Options
+     * @param string $realms  Parameter can be used to limit the realms returned to a specific set of realms
+     * @param array  $options Options
      *
      * @return Realms
      */
-    public function getRealmStatus(array $options = [])
+    public function getRealmStatus($realms = '', array $options = [])
     {
+        $options += [
+            'realms' => $realms,
+        ];
+
         $response = $this->request('/realm/status', $options);
 
         return $this->createObject(WorldOfWarcraftFactory::REALM_STATUS, $response);
@@ -474,9 +480,9 @@ class WorldOfWarcraft extends Service
      */
     public function getZonesMasterList(array $options = [])
     {
-        $reponse = $this->request('/zone/', $options);
+        $response = $this->request('/zone/', $options);
 
-        return $this->createObject(WorldOfWarcraftFactory::ZONE_LIST, $reponse);
+        return $this->createObject(WorldOfWarcraftFactory::ZONE_LIST, $response);
     }
 
     /**
@@ -647,16 +653,16 @@ class WorldOfWarcraft extends Service
     // region Community OAuth API
 
     /**
-     * Get profile characters
+     * Get user characters
      *
      * This provides data about the current logged in OAuth user's WoW profile
      *
      * @param null|string $accessToken Authorized user access token
      * @param array       $options     Options
      *
-     * @return Response
+     * @return UserCharacters
      */
-    public function getProfileCharacters($accessToken = null, array $options = [])
+    public function getUserCharacters($accessToken = null, array $options = [])
     {
         if (null === $accessToken) {
             $options['access_token'] = $this->blizzardClient->getAccessToken();
@@ -664,7 +670,9 @@ class WorldOfWarcraft extends Service
             $options['access_token'] = $accessToken;
         }
 
-        return $this->request('/user/characters', $options);
+        $response = $this->request('/user/characters', $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::USER_CHARACTERS, $response);
     }
 
     // endregion Community OAuth API

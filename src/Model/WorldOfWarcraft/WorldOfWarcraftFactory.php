@@ -44,6 +44,7 @@ class WorldOfWarcraftFactory
     const ITEM                = 'item';
     const ITEM_SET            = 'item_set';
     const REALM_STATUS        = 'realm_status';
+    const USER_CHARACTERS     = 'user_characters';
 
     /**
      * Get model
@@ -74,6 +75,7 @@ class WorldOfWarcraftFactory
             self::ITEM                => new Item(),
             self::ITEM_SET            => new ItemSet(),
             self::REALM_STATUS        => new Realms(),
+            self::USER_CHARACTERS     => new UserCharacters(),
         ];
 
         /** @var AbstractModel $model */

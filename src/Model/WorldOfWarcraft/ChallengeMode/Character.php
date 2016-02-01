@@ -62,6 +62,16 @@ class Character extends AbstractModel
     private $spec;
 
     /**
+     * @var string $guild Guild
+     */
+    private $guild;
+
+    /**
+     * @var string $guildRealm Guild realm
+     */
+    private $guildRealm;
+
+    /**
      * @var int $lastModified Last modified
      */
     private $lastModified;
@@ -307,6 +317,54 @@ class Character extends AbstractModel
     }
 
     /**
+     * Get guild
+     *
+     * @return string Guild
+     */
+    public function getGuild()
+    {
+        return $this->guild;
+    }
+
+    /**
+     * Set guild
+     *
+     * @param string $guild Guild
+     *
+     * @return $this
+     */
+    public function setGuild($guild)
+    {
+        $this->guild = $guild;
+
+        return $this;
+    }
+
+    /**
+     * Get guild realm
+     *
+     * @return string Guild realm
+     */
+    public function getGuildRealm()
+    {
+        return $this->guildRealm;
+    }
+
+    /**
+     * Set guild realm
+     *
+     * @param string $guildRealm Guild realm
+     *
+     * @return $this
+     */
+    public function setGuildRealm($guildRealm)
+    {
+        $this->guildRealm = $guildRealm;
+
+        return $this;
+    }
+
+    /**
      * Get last modified
      *
      * @return int Last modified
@@ -346,8 +404,16 @@ class Character extends AbstractModel
              ->setThumbnail($data['thumbnail'])
              ->setLastModified($data['lastModified']);
 
-        if (isset($data['spec'])) {
+        if (isset($data['spec']) && !empty($data['spec'])) {
             $this->setSpec((new Spec())->fillObject($data['spec']));
+        }
+
+        if (isset($data['guild']) && !empty($data['guild'])) {
+            $this->setGuild($data['guild']);
+        }
+
+        if (isset($data['guildRealm']) && !empty($data['guildRealm'])) {
+            $this->setGuildRealm($data['guildRealm']);
         }
 
         return $this;

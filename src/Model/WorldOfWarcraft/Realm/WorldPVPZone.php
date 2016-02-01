@@ -13,21 +13,39 @@ class WorldPVPZone extends AbstractModel
 {
     /**
      * @var int $area Area
+     *
+     * An internal id of this zone.
      */
     private $area;
 
     /**
      * @var int $controllingFaction Controlling faction
+     *
+     * Which faction is controlling the zone at the moment.
+     * Possible values are:
+     *     0: Alliance
+     *     1: Horde
+     *     2: Neutral
      */
     private $controllingFaction;
 
     /**
      * @var int $status Status
+     *
+     * The current status of the zone.
+     * The possible values are:
+     *    -1: Unknown
+     *     0: Idle
+     *     1: Populating
+     *     2: Active
+     *     3: Concluded
      */
     private $status;
 
     /**
      * @var int $next Next
+     *
+     * A timestamp of when the next battle starts.
      */
     private $next;
 
