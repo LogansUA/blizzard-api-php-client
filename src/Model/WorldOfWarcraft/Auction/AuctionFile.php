@@ -3,7 +3,6 @@
 namespace BlizzardApi\Model\WorldOfWarcraft\Auction;
 
 use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
-use DateTime;
 
 /**
  * AuctionFile class
@@ -49,7 +48,7 @@ class AuctionFile extends AbstractModel
     /**
      * Get last modified
      *
-     * @return DateTime Last modified
+     * @return \DateTime Last modified
      */
     public function getLastModified()
     {
@@ -59,11 +58,11 @@ class AuctionFile extends AbstractModel
     /**
      * Set last modified
      *
-     * @param DateTime $lastModified Last modified
+     * @param \DateTime $lastModified Last modified
      *
      * @return $this
      */
-    public function setLastModified(DateTime $lastModified)
+    public function setLastModified(\DateTime $lastModified)
     {
         $this->lastModified = $lastModified;
 
@@ -77,7 +76,7 @@ class AuctionFile extends AbstractModel
     {
         /** @todo Change setting last modified */
         $this->setUrl($data['url'])
-             ->setLastModified((new DateTime())->setTimestamp(substr($data['lastModified'], 0, -3)));
+             ->setLastModified((new \DateTime())->setTimestamp(substr($data['lastModified'], 0, -3)));
 
         return $this;
     }

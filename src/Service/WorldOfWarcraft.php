@@ -204,13 +204,18 @@ class WorldOfWarcraft extends Service
      *
      * @param string $realm     The realm the guild lives on
      * @param string $guildName Name of the guild being queried
+     * @param string $fields    The optional data you want to retrieve about the guild. Each field value is explained in more detail in the following methods. If no fields are specified the API will only return basic data about the guild.
      * @param array  $options   Options
      *
      * @return Response
      */
-    public function getGuild($realm, $guildName, array $options = [])
+    public function getGuild($realm, $guildName, $fields = '', array $options = [])
     {
-        return $this->request('/guild/'.(string) $realm.'/'.(string) $guildName, $options);
+        $options['fields'] = $fields;
+
+        $response = $this->request('/guild/'.(string) $realm.'/'.(string) $guildName, $options);
+
+        return $this->createObject(WorldOfWarcraftFactory::GUILD, $response);
     }
 
     // endregion Guild profile API

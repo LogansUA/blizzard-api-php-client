@@ -7,6 +7,7 @@ use BlizzardApi\Model\WorldOfWarcraft\Auction\Auction;
 use BlizzardApi\Model\WorldOfWarcraft\Boss\Boss;
 use BlizzardApi\Model\WorldOfWarcraft\Boss\BossList;
 use BlizzardApi\Model\WorldOfWarcraft\ChallengeMode\Leaderboard;
+use BlizzardApi\Model\WorldOfWarcraft\Guild\Guild;
 use BlizzardApi\Model\WorldOfWarcraft\Item\Item;
 use BlizzardApi\Model\WorldOfWarcraft\Item\ItemSet;
 use BlizzardApi\Model\WorldOfWarcraft\Mount\MountList;
@@ -45,6 +46,7 @@ class WorldOfWarcraftFactory
     const ITEM_SET            = 'item_set';
     const REALM_STATUS        = 'realm_status';
     const USER_CHARACTERS     = 'user_characters';
+    const GUILD               = 'guild';
 
     /**
      * Get model
@@ -76,6 +78,7 @@ class WorldOfWarcraftFactory
             self::ITEM_SET            => new ItemSet(),
             self::REALM_STATUS        => new Realms(),
             self::USER_CHARACTERS     => new UserCharacters(),
+            self::GUILD               => new Guild(),
         ];
 
         /** @var AbstractModel $model */

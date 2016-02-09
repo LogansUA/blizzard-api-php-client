@@ -4,7 +4,6 @@ namespace BlizzardApi\Model\WorldOfWarcraft\ChallengeMode;
 
 use BlizzardApi\Model\WorldOfWarcraft\AbstractModel;
 use BlizzardApi\Model\WorldOfWarcraft\Time;
-use DateTime;
 
 /**
  * Class Group
@@ -24,7 +23,7 @@ class Group extends AbstractModel
     private $time;
 
     /**
-     * @var DateTime $date Date
+     * @var \DateTime $date Date
      */
     private $date;
 
@@ -99,7 +98,7 @@ class Group extends AbstractModel
     /**
      * Get date
      *
-     * @return DateTime Datetime
+     * @return \DateTime Datetime
      */
     public function getDate()
     {
@@ -109,11 +108,11 @@ class Group extends AbstractModel
     /**
      * Set date
      *
-     * @param DateTime $date Datetime
+     * @param \DateTime $date Datetime
      *
      * @return $this
      */
-    public function setDate(DateTime $date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 
@@ -223,7 +222,7 @@ class Group extends AbstractModel
     {
         $this->setRanking($data['ranking'])
              ->setTime($data['time'])
-             ->setDate(new DateTime($data['date']))
+             ->setDate(new \DateTime($data['date']))
              ->setMedal($data['medal'])
              ->setFaction($data['faction'])
              ->setIsRecurring($data['isRecurring'])
