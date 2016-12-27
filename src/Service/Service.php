@@ -52,7 +52,7 @@ class Service
         $options = $this->generateQueryOptions($options);
 
         $result = $client->get($this->serviceParam.$urlSuffix, $options);
-
+        
         return $result;
     }
 
