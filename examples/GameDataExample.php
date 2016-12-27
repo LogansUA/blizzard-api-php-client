@@ -3,7 +3,7 @@
 // Include composer autoload file
 require_once __DIR__.'/../vendor/autoload.php';
 
-// Create a new Blizzard client with Blizzard API key
+// Create a new Blizzard client with Blizzard API key and secret
 $client = new \BlizzardApi\BlizzardClient('apiKey', 'apiSecret');
 
 // Create a new GameData service with configured Blizzard client
