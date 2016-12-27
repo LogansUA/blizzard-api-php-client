@@ -2,6 +2,7 @@
 
 namespace BlizzardApi;
 
+use GuzzleHttp\Client;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BlizzardClient
 {
     const API_URL_PATTERN = 'https://region.api.battle.net';
+    const API_ACCESS_TOKEN_URL_PATTERN = 'https://region.battle.net/oauth/token';
 
     /**
      * @var string $apiUrl Blizzard API url
@@ -20,14 +22,19 @@ class BlizzardClient
     private $apiUrl;
 
     /**
+     * @var string $apiAccessTokenUrl Blizzard API Access Token url
+     */
+    private $apiAccessTokenUrl;
+
+    /**
      * @var string $apiKey API key
      */
     private $apiKey;
 
     /**
-     * @var string $accessToken Access token
+     * @var \BlizzardApi\Tokens\Access[] $accessTokens Access tokens
      */
-    private $accessToken;
+    private $accessTokens;
 
     /**
      * @var string $locale Locale
@@ -43,17 +50,17 @@ class BlizzardClient
      * BlizzardClient constructor
      *
      * @param string      $apiKey      API key
+     * @param string      $apiSecret   API Secret key
      * @param string      $region      Region
      * @param string      $locale      Locale
-     * @param null|string $accessToken OAuth access token
      */
-    public function __construct($apiKey, $region = 'us', $locale = 'en_us', $accessToken = null)
+    public function __construct($apiKey, $apiSecret, $region = 'us', $locale = 'en_us')
     {
         $options = [
             'apiKey'      => $apiKey,
+            'apiSecret'   => $apiSecret,
             'region'      => strtolower($region),
-            'locale'      => strtolower($locale),
-            'accessToken' => $accessToken,
+            'locale'      => strtolower($locale)
         ];
 
         $resolver = (new OptionsResolver());
@@ -62,11 +69,12 @@ class BlizzardClient
         $options = $resolver->resolve($options);
 
         $this->apiKey      = $options['apiKey'];
+        $this->apiSecret   = $options['apiSecret'];
         $this->region      = $options['region'];
         $this->locale      = $options['locale'];
-        $this->accessToken = $options['accessToken'];
 
         $this->updateApiUrl($options['region']);
+        $this->updateApiAccessTokenUrl($options['region']);
     }
 
     /**
@@ -77,6 +85,16 @@ class BlizzardClient
     public function getApiUrl()
     {
         return $this->apiUrl;
+    }
+
+    /**
+     * Get api Access Token url
+     *
+     * @return string Api Access Token url
+     */
+    public function getApiAccessTokenUrl()
+    {
+        return $this->apiAccessTokenUrl;
     }
 
     /**
@@ -104,6 +122,30 @@ class BlizzardClient
     }
 
     /**
+     * Get api secret
+     *
+     * @return string Api secret
+     */
+    public function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * Set api secret
+     *
+     * @param string $apiSecret Api secret
+     *
+     * @return $this
+     */
+    public function setApiSecret($apiSecret)
+    {
+        $this->apiSecret = $apiSecret;
+
+        return $this;
+    }
+
+    /**
      * Get region
      *
      * @return string Region
@@ -125,6 +167,7 @@ class BlizzardClient
         $this->region = strtolower($region);
 
         $this->updateApiUrl($region);
+        $this->updateApiAccessTokenUrl($region);
 
         return $this;
     }
@@ -160,19 +203,27 @@ class BlizzardClient
      */
     public function getAccessToken()
     {
-        return $this->accessToken;
+        if ($this->accessTokens == null) {
+            $this->accessTokens = [];
+        }
+
+        if (!array_key_exists($this->getRegion(), $this->accessTokens)) {
+            $this->accessTokens[$this->getRegion()] = $this->requestAccessToken();
+        }
+
+        return $this->accessTokens[$this->getRegion()]->getToken();
     }
 
     /**
      * Set access token
      *
-     * @param null|string $accessToken Access token
+     * @param null|Tokens\Access $accessToken Access token
      *
      * @return $this
      */
-    public function setAccessToken($accessToken)
+    public function setAccessToken(Tokens\Access $accessToken)
     {
-        $this->accessToken = $accessToken;
+        $this->accessTokens[$this->getRegion()] = $accessToken;
 
         return $this;
     }
@@ -189,6 +240,20 @@ class BlizzardClient
     private function updateApiUrl($region)
     {
         $this->apiUrl = str_replace('region', strtolower($region), self::API_URL_PATTERN);
+    }
+
+    /**
+     * Update API Access Token url
+     *
+     * Update API Access Token url by replacing region in API url pattern
+     *
+     * @param string $region Region
+     *
+     * @return $this
+     */
+    private function updateApiAccessTokenUrl($region)
+    {
+        $this->apiAccessTokenUrl = str_replace('region', strtolower($region), self::API_ACCESS_TOKEN_URL_PATTERN);
     }
 
     /**
@@ -213,12 +278,33 @@ class BlizzardClient
             );
         }
 
-        $resolver->setRequired(['apiKey', 'region', 'locale', 'accessToken'])
+        $resolver->setRequired(['apiKey', 'apiSecret', 'region', 'locale'])
                  ->setAllowedTypes('apiKey', 'string')
+                 ->setAllowedTypes('apiSecret', 'string')
                  ->setAllowedTypes('region', 'string')
                  ->setAllowedValues('region', array_keys(GeoData::$list))
                  ->setAllowedTypes('locale', 'string')
-                 ->setAllowedValues('locale', $locales)
-                 ->setAllowedTypes('accessToken', ['null', 'string']);
+                 ->setAllowedValues('locale', $locales);
     }
+
+    protected function requestAccessToken() {
+        $client = new Client();
+
+        $options = [
+            'form_params' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => $this->getApiKey(),
+                'client_secret' => $this->getApiSecret(),
+            ]
+        ];
+
+        $result = $client->post($this->getApiAccessTokenUrl(), $options);
+
+        if ($result->getStatusCode() == 200) {
+            return Tokens\Access::fromJson(json_decode($result->getBody()->getContents()));
+        } else {
+            throw new \HttpResponseException("Invalid Response");
+        }
+    }
+
 }

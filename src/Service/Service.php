@@ -53,6 +53,7 @@ class Service
 
         $result = $client->get($this->serviceParam.$urlSuffix, $options);
 
+        var_dump($result->getBody()->getContents());
         return $result;
     }
 
