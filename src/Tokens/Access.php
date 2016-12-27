@@ -65,15 +65,28 @@ class Access
         return new self($jsonObject->access_token, $jsonObject->token_type, $jsonObject->expires_in);
     }
 
-    public function isExpired() {
-        if ($this->expiresAt > new \DateTime()) {
+    /**
+     * Check if the token is expired
+     *
+     * @return bool
+     */
+    public function isExpired()
+    {
+        if ($this->expiresAt > new \DateTime()){
             return false;
         }
 
         return true;
     }
 
-    public function getToken() {
+    /**
+     * Get the token string
+     *
+     * @return string
+     * @throws Expired
+     */
+    public function getToken()
+    {
         if ($this->isExpired()) {
             throw new Expired("Token has expired");
         }

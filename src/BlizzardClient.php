@@ -287,7 +287,13 @@ class BlizzardClient
                  ->setAllowedValues('locale', $locales);
     }
 
-    protected function requestAccessToken() {
+    /**
+     * Request an Access Token from Blizzard
+     * @return Tokens\Access
+     * @throws \HttpResponseException
+     */
+    protected function requestAccessToken()
+    {
         $client = new Client();
 
         $options = [
