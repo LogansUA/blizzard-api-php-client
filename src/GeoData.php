@@ -13,7 +13,7 @@ class GeoData
      * @var array $list List of available regions and locales
      */
     static public $list = [
-        'eu'  => [
+        'eu' => [
             'en_gb',
             'de_de',
             'es_es',
@@ -23,15 +23,15 @@ class GeoData
             'pt_pt',
             'ru_ru',
         ],
-        'us'  => [
+        'us' => [
             'en_us',
             'pt_br',
             'es_mx',
         ],
-        'kr'  => [
+        'kr' => [
             'ko_kr',
         ],
-        'tw'  => [
+        'tw' => [
             'zh_tw',
         ],
         'sea' => [

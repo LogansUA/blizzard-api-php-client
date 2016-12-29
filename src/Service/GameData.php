@@ -2,7 +2,7 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * GameData class
@@ -20,7 +20,7 @@ class GameData extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getSeasonIndex(array $options = [])
     {
@@ -37,7 +37,7 @@ class GameData extends Service
      * @param int   $id      The season to lookup
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getSeasonById($id, array $options = [])
     {
@@ -55,7 +55,7 @@ class GameData extends Service
      * @param string $leaderboard The leaderboard to lookup, you can find these strings in the Season API call
      * @param array  $options     Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getSeasonLeaderboardById($id, $leaderboard, array $options = [])
     {
@@ -71,7 +71,7 @@ class GameData extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getEraIndex(array $options = [])
     {
@@ -88,7 +88,7 @@ class GameData extends Service
      * @param int   $id      The era to lookup
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getEraIndexById($id, array $options = [])
     {
@@ -106,7 +106,7 @@ class GameData extends Service
      * @param string $leaderboard The leaderboard to lookup, you can find these strings in the Era API call
      * @param array  $options     Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getEraLeaderboard($id, $leaderboard, array $options = [])
     {

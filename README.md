@@ -10,16 +10,11 @@ API client for Blizzard API written in PHP. [Blizzard API Documentation](https:/
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/b103523d-7f46-4c74-94f9-cf41462b298a/mini.png)](https://insight.sensiolabs.com/projects/b103523d-7f46-4c74-94f9-cf41462b298a)
 
 ## Installation
-### Method 1
 ```
-composer require logansua/blizzard-api-client
+$ composer require logansua/blizzard-api-client
 ```
 This command requires you to have Composer installed globally, as explained
 in the [Composer documentation](https://getcomposer.org/doc/00-intro.md).
-### Method 2
-```
-git clone https://github.com/LogansUA/blizzard-api-php-client.git
-```
 
 ## Basic usage
 ```PHP
@@ -40,11 +35,15 @@ echo $response->getBody();
 ```
 
 ## List of available API services
-* World of Warcraft ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/WorldOfWarcraftExample.php))
-* Diablo 3 ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/DiabloExample.php))
-* Starcraft ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/StarcraftExample.php))
-* Community OAuth ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/CommunityOAuthExample.php))
-* Game Data ([example](https://github.com/LogansUA/blizzard-api-php-client/blob/master/examples/GameDataExample.php))
+* World of Warcraft ([example](docs/examples/WorldOfWarcraftExample.php))
+* Diablo 3 ([example](docs/examples/DiabloExample.php))
+* Starcraft ([example](docs/examples/StarcraftExample.php))
+* Community OAuth ([example](docs/examples/CommunityOAuthExample.php))
+* Game Data ([example](docs/examples/GameDataExample.php))
+
+## Contributing
+
+See [CONTRIBUTING](.github/CONTRIBUTING.md) file.
 
 ## License
-This software is published under the [MIT License](https://github.com/LogansUA/blizzard-api-php-client/blob/master/LICENSE)
+This software is published under the [MIT License](LICENSE)

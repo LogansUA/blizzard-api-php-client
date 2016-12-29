@@ -2,7 +2,7 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Starcraft class
@@ -28,7 +28,7 @@ class Starcraft extends Service
      * @param string $region  The region of the profile to retrieve
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getProfile($id, $name, $region = '1', array $options = [])
     {
@@ -45,7 +45,7 @@ class Starcraft extends Service
      * @param string $region  The region of the profile to retrieve
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getLadders($id, $name, $region = '1', array $options = [])
     {
@@ -62,7 +62,7 @@ class Starcraft extends Service
      * @param string $region  The region of the profile to retrieve
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getMatchHistory($id, $name, $region = '1', array $options = [])
     {
@@ -81,7 +81,7 @@ class Starcraft extends Service
      * @param string $id      The ID of the ladder to retrieve.
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getLadder($id, array $options = [])
     {
@@ -99,7 +99,7 @@ class Starcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getAchievements(array $options = [])
     {
@@ -113,7 +113,7 @@ class Starcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getRewards(array $options = [])
     {
@@ -132,7 +132,7 @@ class Starcraft extends Service
      * @param null|string $accessToken Authorized user access token
      * @param array       $options     Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getProfileUser($accessToken = null, array $options = [])
     {

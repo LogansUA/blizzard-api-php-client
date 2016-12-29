@@ -2,7 +2,7 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class World Of Warcraft
@@ -26,7 +26,7 @@ class WorldOfWarcraft extends Service
      * @param int   $achievementId The ID of the achievement to retrieve
      * @param array $options       Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getAchievement($achievementId, array $options = [])
     {
@@ -49,7 +49,7 @@ class WorldOfWarcraft extends Service
      * @param string $realm   The realm being requested
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getAuctionDataStatus($realm, array $options = [])
     {
@@ -68,7 +68,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getBossMasterList(array $options = [])
     {
@@ -84,7 +84,7 @@ class WorldOfWarcraft extends Service
      * @param int   $bossId  The ID of the boss you want to retrieve
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getBoss($bossId, array $options = [])
     {
@@ -106,7 +106,7 @@ class WorldOfWarcraft extends Service
      * @param string $realm   The realm being requested
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getRealmLeaderboard($realm, array $options = [])
     {
@@ -121,7 +121,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getRegionLeaderboard(array $options = [])
     {
@@ -145,7 +145,7 @@ class WorldOfWarcraft extends Service
      * @param string $characterName The name of the character you want to retrieve
      * @param array  $options       Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getCharacter($realm, $characterName, array $options = [])
     {
@@ -171,7 +171,7 @@ class WorldOfWarcraft extends Service
      * @param string $guildName Name of the guild being queried
      * @param array  $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getGuild($realm, $guildName, array $options = [])
     {
@@ -190,7 +190,7 @@ class WorldOfWarcraft extends Service
      * @param int   $itemId  Unique ID of the item being requested
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getItem($itemId, array $options = [])
     {
@@ -205,7 +205,7 @@ class WorldOfWarcraft extends Service
      * @param int   $setId   Unique ID of the set being requested
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getItemSet($setId, array $options = [])
     {
@@ -223,7 +223,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getMountMasterList(array $options = [])
     {
@@ -241,7 +241,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getPetList(array $options = [])
     {
@@ -257,7 +257,7 @@ class WorldOfWarcraft extends Service
      * @param int   $abilityId The ID of the ability you want to retrieve
      * @param array $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getPetAbility($abilityId, array $options = [])
     {
@@ -273,7 +273,7 @@ class WorldOfWarcraft extends Service
      * @param int   $speciesId The species you want to retrieve data on
      * @param array $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getPetSpecies($speciesId, array $options = [])
     {
@@ -288,7 +288,7 @@ class WorldOfWarcraft extends Service
      * @param int   $speciesId The pet's species ID. This can be found by querying a users' list of pets via the Character Profile API
      * @param array $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getPetStats($speciesId, array $options = [])
     {
@@ -308,7 +308,7 @@ class WorldOfWarcraft extends Service
      * @param int   $bracket The type of leaderboard you want to retrieve. Valid entries are 2v2, 3v3, 5v5, and rbg
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getLeaderboards($bracket, array $options = [])
     {
@@ -327,7 +327,7 @@ class WorldOfWarcraft extends Service
      * @param int   $questId The ID of the desired quest
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getQuest($questId, array $options = [])
     {
@@ -347,7 +347,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getRealmStatus(array $options = [])
     {
@@ -366,7 +366,7 @@ class WorldOfWarcraft extends Service
      * @param int   $recipeId Unique ID for the desired recipe
      * @param array $options  Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getRecipe($recipeId, array $options = [])
     {
@@ -385,7 +385,7 @@ class WorldOfWarcraft extends Service
      * @param int   $spellId Unique ID of the desired spell
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getSpell($spellId, array $options = [])
     {
@@ -405,7 +405,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getZonesMasterList(array $options = [])
     {
@@ -420,7 +420,7 @@ class WorldOfWarcraft extends Service
      * @param int   $zoneId  The ID of the zone you want to retrieve
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getZone($zoneId, array $options = [])
     {
@@ -438,7 +438,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataBattlegroups(array $options = [])
     {
@@ -452,7 +452,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataCharacterRaces(array $options = [])
     {
@@ -466,7 +466,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataCharacterClasses(array $options = [])
     {
@@ -481,7 +481,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataCharacterAchievements(array $options = [])
     {
@@ -495,7 +495,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataGuildRewards(array $options = [])
     {
@@ -509,7 +509,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataGuildPerks(array $options = [])
     {
@@ -524,7 +524,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataGuildAchievements(array $options = [])
     {
@@ -538,7 +538,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataItemClasses(array $options = [])
     {
@@ -552,7 +552,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataTalents(array $options = [])
     {
@@ -566,7 +566,7 @@ class WorldOfWarcraft extends Service
      *
      * @param array $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getDataPetTypes(array $options = [])
     {
@@ -585,7 +585,7 @@ class WorldOfWarcraft extends Service
      * @param null|string $accessToken Authorized user access token
      * @param array       $options     Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getProfileCharacters($accessToken = null, array $options = [])
     {

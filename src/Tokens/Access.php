@@ -2,15 +2,13 @@
 
 namespace BlizzardApi\Tokens;
 
-use BlizzardApi\BlizzardClient;
 use BlizzardApi\Tokens\Exceptions\Expired;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 
 /**
  * Class Access Token
  *
  * @author Hristo Mitev <duronrulez@gmail.com>
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
 class Access
 {
@@ -40,10 +38,11 @@ class Access
     protected $expiresAt;
 
     /**
-     * Access constructor.
-     * @param string $accessToken
-     * @param string $tokenType
-     * @param int $expiresIn
+     * Constructor
+     *
+     * @param string $accessToken Access token
+     * @param string $tokenType   Token type
+     * @param int    $expiresIn   Expires in (seconds)
      */
     public function __construct($accessToken, $tokenType, $expiresIn)
     {
@@ -51,14 +50,16 @@ class Access
         $this->tokenType = $tokenType;
         $this->expiresIn = $expiresIn;
         $this->createdAt = new \DateTime();
-        $this->expiresAt = new \DateTime();;
+        $this->expiresAt = new \DateTime();
         $this->expiresAt->add(new \DateInterval('PT'.$this->expiresIn.'S'));
     }
 
     /**
      * Create token from json object
-     * @param \stdClass $jsonObject
-     * @return \BlizzardApi\Tokens\Access
+     *
+     * @param \stdClass $jsonObject JSON object
+     *
+     * @return Access
      */
     public static function fromJson($jsonObject)
     {
@@ -72,23 +73,20 @@ class Access
      */
     public function isExpired()
     {
-        if ($this->expiresAt > new \DateTime()){
-            return false;
-        }
-
-        return true;
+        return $this->expiresAt < new \DateTime();
     }
 
     /**
      * Get the token string
      *
      * @return string
+     *
      * @throws Expired
      */
     public function getToken()
     {
         if ($this->isExpired()) {
-            throw new Expired("Token has expired");
+            throw new Expired('Token has expired');
         }
 
         return $this->token;

@@ -1,7 +1,7 @@
 <?php
 
 // Include composer autoload file
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../../vendor/autoload.php';
 
 // Create a new Blizzard client with Blizzard API key and secret
 $client = new \BlizzardApi\BlizzardClient('apiKey', 'apiSecret');
@@ -14,8 +14,11 @@ $response = $wow->getGuild('test-realm', 'test-guild', [
     'fields' => 'achievements,challenge',
 ]);
 
-// $response->getStatusCode(); - accessing response status code
-// $response->getHeaders(); - accessing response headers
+// Accessing response status code
+$response->getStatusCode();
+
+// Accessing response headers
+$response->getHeaders();
 
 // Show response body
 echo $response->getBody();

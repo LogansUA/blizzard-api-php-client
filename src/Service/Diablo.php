@@ -2,7 +2,7 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Diablo
@@ -26,7 +26,7 @@ class Diablo extends Service
      * @param string $battleTag Battle Tag in name-#### format (ie. Noob-1234)
      * @param array  $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getCareerProfile($battleTag, array $options = [])
     {
@@ -42,7 +42,7 @@ class Diablo extends Service
      * @param string $heroId    The hero id of the hero to look up
      * @param array  $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getHeroProfile($battleTag, $heroId, array $options = [])
     {
@@ -61,7 +61,7 @@ class Diablo extends Service
      * @param string $itemId  The item data string (from a profile) containing the item to lookup
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getItemDataById($itemId, array $options = [])
     {
@@ -76,7 +76,7 @@ class Diablo extends Service
      * @param string $follower The data about a follower (enchantress, scoundrel, templar)
      * @param array  $options  Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getFollowerData($follower, array $options = [])
     {
@@ -91,7 +91,7 @@ class Diablo extends Service
      * @param string $artisan The data about an artisan (blacksmith, jeweler, mystic)
      * @param array  $options Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getArtisanData($artisan, array $options = [])
     {

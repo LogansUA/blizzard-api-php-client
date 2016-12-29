@@ -4,7 +4,7 @@ namespace BlizzardApi\Service;
 
 use BlizzardApi\BlizzardClient;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Abstract Service
@@ -41,7 +41,7 @@ class Service
      * @param string $urlSuffix API URL method
      * @param array  $options   Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function request($urlSuffix, array $options)
     {
@@ -51,9 +51,7 @@ class Service
 
         $options = $this->generateQueryOptions($options);
 
-        $result = $client->get($this->serviceParam.$urlSuffix, $options);
-        
-        return $result;
+        return $client->get($this->serviceParam.$urlSuffix, $options);
     }
 
     /**
