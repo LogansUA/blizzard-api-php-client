@@ -2,7 +2,11 @@
 
 namespace BlizzardApi\Tokens\Exceptions;
 
-
-class Expired extends \Exception {
-
+/**
+ * Class Expired
+ *
+ * @author Hristo Mitev <duronrulez@gmail.com>
+ */
+class Expired extends \Exception
+{
 }

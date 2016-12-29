@@ -1,7 +1,7 @@
 <?php
 
 // Include composer autoload file
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../../vendor/autoload.php';
 
 // Create a new Blizzard client with Blizzard API key and secret
 $client = new \BlizzardApi\BlizzardClient('apiKey', 'apiSecret');
@@ -12,8 +12,11 @@ $starcraft = new \BlizzardApi\Service\Starcraft($client);
 // Use API method for getting specific data
 $response = $starcraft->getAchievements();
 
-// $response->getStatusCode(); - accessing response status code
-// $response->getHeaders(); - accessing response headers
+// Accessing response status code
+$response->getStatusCode();
+
+// Accessing response headers
+$response->getHeaders();
 
 // Show response body
 echo $response->getBody();

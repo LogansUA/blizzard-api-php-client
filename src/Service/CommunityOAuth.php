@@ -2,7 +2,7 @@
 
 namespace BlizzardApi\Service;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class CommunityOAuth
@@ -21,7 +21,7 @@ class CommunityOAuth extends Service
      * @param null|string $accessToken Authorized user access token
      * @param array       $options     Options
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public function getUser($accessToken = null, array $options = [])
     {
