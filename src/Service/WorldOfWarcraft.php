@@ -351,7 +351,7 @@ class WorldOfWarcraft extends Service
      */
     public function getRealmStatus(array $options = [])
     {
-        return $this->request('/realm/', $options);
+        return $this->request('/realm/status', $options);
     }
 
     // endregion Realm status API
