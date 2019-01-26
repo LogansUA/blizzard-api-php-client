@@ -66,19 +66,25 @@ class Service
      */
     private function generateRequestOptions(array $options = [])
     {
-        $result = [];
+        $result = [
+            'query' => [],
+            'headers' => [],
+        ];
 
         if (isset($options['query']) || isset($options['headers'])) {
             if (isset($options['query'])) {
-                $result['query'] = $options['query'] + $this->getQueryDefaultOptions();
+                $result['query'] += $options['query'];
             }
 
             if (isset($options['headers'])) {
-                $result['headers'] = $options['headers'] + $this->getHeadersDefaultOptions();
+                $result['headers'] += $options['headers'];
             }
         } else {
             $result = $options + $this->getDefaultRequestOptions();
         }
+
+        $result['query'] += $this->getQueryDefaultOptions();
+        $result['headers'] += $this->getHeadersDefaultOptions();
 
         return $result;
     }
