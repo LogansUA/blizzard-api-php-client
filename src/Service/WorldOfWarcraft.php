@@ -21,9 +21,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get achievement information by ID
      *
-     * This provides data about an individual achievement
+     * Returns data about an individual achievement.
      *
-     * @param int   $achievementId The ID of the achievement to retrieve
+     * @param int   $achievementId The ID of the achievement to retrieve.
      * @param array $options       Options
      *
      * @return ResponseInterface
@@ -40,13 +40,13 @@ class WorldOfWarcraft extends Service
     /**
      * Get auction data status
      *
-     * Auction APIs currently provide rolling batches of data about current auctions. Fetching auction dumps is a two
-     * step process that involves checking a per-realm index file to determine if a recent dump has been generated and
-     * then fetching the most recently generated dump file if necessary.
+     * Auction APIs currently provide rolling batches of data about current auctions.
+     * Fetching auction dumps is a two-step process that involves checking a per-realm index file to determine
+     * if a recent dump has been generated and then fetching the most recently generated dump file (if necessary).
      *
-     * This API resource provides a per-realm list of recently generated auction house data dumps
+     * This API resource provides a per-realm list of recently generated auction house data dumps.
      *
-     * @param string $realm   The realm being requested
+     * @param string $realm   The realm to request.
      * @param array  $options Options
      *
      * @return ResponseInterface
@@ -63,8 +63,8 @@ class WorldOfWarcraft extends Service
     /**
      * Get boss master list
      *
-     * A list of all supported bosses. A 'boss' in this context should be considered a boss encounter, which may include
-     * more than one NPC.
+     * Returns a list of all supported bosses.
+     * A "boss" in this context should be considered a boss encounter, which may include more than one NPC.
      *
      * @param array $options Options
      *
@@ -78,10 +78,10 @@ class WorldOfWarcraft extends Service
     /**
      * Get boss information by ID
      *
-     * The boss API provides information about bosses. A 'boss' in this context should be considered a boss encounter,
-     * which may include more than one NPC.
+     * The boss API provides information about bosses.
+     * A "boss" in this context should be considered a boss encounter, which may include more than one NPC.
      *
-     * @param int   $bossId  The ID of the boss you want to retrieve
+     * @param int   $bossId  The ID of the boss to retrieve.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -98,12 +98,12 @@ class WorldOfWarcraft extends Service
     /**
      * Get realm leaderboards
      *
-     * The data in this request has data for all 9 challenge mode maps (currently). The map field includes the current
-     * medal times for each dungeon. Inside each ladder we provide data about each character that was part of each run.
-     * The character data includes the current cached spec of the character while the member field includes the spec of
-     * the character during the challenge mode run.
+     * The request returns data for all nine challenge mode maps (currently). The map field includes the current
+     * medal times for each dungeon. Each ladder provides data about each character that was part of each run.
+     * The character data includes the current cached specialization of the character while the member field includes
+     * the specialization of the character during the challenge mode run.
      *
-     * @param string $realm   The realm being requested
+     * @param string $realm   The realm to request.
      * @param array  $options Options
      *
      * @return ResponseInterface
@@ -117,7 +117,7 @@ class WorldOfWarcraft extends Service
      * Get region leaderboards
      *
      * The region leaderboard has the exact same data format as the realm leaderboards except there is no realm field.
-     * It is simply the top 100 results gathered for each map for all of the available realm leaderboards in a region.
+     * Instead, the response has the top 100 results gathered for each map for all of the available realm leaderboards in a region.
      *
      * @param array $options Options
      *
@@ -125,7 +125,7 @@ class WorldOfWarcraft extends Service
      */
     public function getRegionLeaderboard(array $options = [])
     {
-        return $this->request('/challenge/region/', $options);
+        return $this->request('/challenge/region', $options);
     }
 
     // endregion Challenge Mode API
@@ -135,20 +135,73 @@ class WorldOfWarcraft extends Service
     /**
      * Get character
      *
-     * The Character Profile API is the primary way to access character information. This Character Profile API can be
-     * used to fetch a single character at a time through an HTTP GET request to a URL describing the character profile
-     * resource. By default, a basic dataset will be returned and with each request and zero or more additional fields
-     * can be retrieved. To access this API, craft a resource URL pointing to the character who's information is to be
-     * retrieved
+     * The Character Profile API is the primary way to access character information. This API can be used to fetch a single
+     * character at a time through an HTTP GET request to a URL describing the character profile resource.
+     * By default, these requests return a basic dataset, and each request can return zero or more additional fields.
+     * To access this API, craft a resource URL pointing to the desired character for which to retrieve information.
+     *
+     * List of possible values in '$fields' variable:
+     * - ''             - Returns a basic dataset of character data.
+     * - 'achievements' - Returns a list of the battle pets the character has obtained.
+     * - 'appearance'   - Data about the character's current battle pet slots.
+     *
+     *                    The response contains which slot a pet is
+     *                    in and whether the slot is empty or locked. The response also includes the battlePetId, which is unique for the
+     *                    character and can be used to match a battlePetId in the pets field for the character. The ability list is the
+     *                    list of three active abilities on a pet. If the pet is not high enough level for multiple abilities it will always
+     *                    be the pet's first three abilities.
+     * - 'feed'         - Returns a list of the character's professions. Does not include class professions.
+     * - 'guild'        - A summary of the guild to which the character belongs. If the character does not belong to a guild and this field is
+     *                    requested, this field will not be exposed.
+     *
+     *                    When a guild is requested, this resource returns a map with key-value pairs that describe a basic set of guild
+     *                    information. Note that the rank of the character is not included in this block as it describes a guild and not
+     *                    a membership of the guild. To retrieve the character's rank within the guild, make a specific, separate request to the guild
+     *                    profile resource.
+     * - 'hunterPets'   - Returns a list of all combat pets the character has obtained.
+     * - 'items'        - Returns a list of items equipped by the character. Use of this field will also include the average item level
+     *                    and average item level equipped for the character.
+     *
+     *                    When the items field is used, this resource returns a map structure containing information about the character's
+     *                    equipped items as well as their average item level.
+     * - 'mounts'       - Returns a list of all mounts the character has obtained.
+     * - 'pets'         - Returns a list of the battle pets the character has obtained.
+     * - 'petSlots'     - Data about the character's current battle pet slots.
+     *
+     *                    The response contains which slot a pet is in and whether the slot is empty or locked. The response also includes
+     *                    the battlePetId, which is unique for the character and can be used to match a battlePetId in the pets field for
+     *                    the character. The ability list is the list of three active abilities on a pet. If the pet is not high enough
+     *                    level for multiple abilities it will always be the pet's first three abilities.
+     * - 'professions'  - Returns a list of the character's professions. Does not include class professions.
+     * - 'progression'  - Returns a list of raids and bosses indicating raid progression and completeness.
+     * - 'pvp'          - Returns a map of PvP information, including arena team membership and rated battlegrounds information.
+     * - 'quests'       - Returns a list of quests the character has completed.
+     * - 'reputation'   - Returns a list of the factions with which the character has an associated reputation.
+     * - 'statistics'   - Returns a map of character statistics.
+     * - 'stats'        - Returns a map of character attributes and stats.
+     * - 'talents'      - Returns a list of the character's talent structures.
+     * - 'titles'       - Returns a list of titles the character has obtained, including the currently selected title.
+     * - 'audit'        - Raw character audit data that powers the character audit on the game site.
      *
      * @param string $realm         The character's realm. Can be provided as the proper realm name or the normalized realm name
      * @param string $characterName The name of the character you want to retrieve
+     * @param string $fields        List of character fields separated by comma (f.e. 'items,mounts,pets,guild')
      * @param array  $options       Options
      *
      * @return ResponseInterface
      */
-    public function getCharacter($realm, $characterName, array $options = [])
+    public function getCharacter($realm, $characterName, $fields = '', array $options = [])
     {
+        $fieldsQueryParam = [
+            'fields' => $fields,
+        ];
+
+        if (isset($options['query'])) {
+            $options['query'] += $fieldsQueryParam;
+        } else {
+            $options['query'] = $fieldsQueryParam;
+        }
+
         return $this->request('/character/'.(string) $realm.'/'.(string) $characterName, $options);
     }
 
@@ -159,22 +212,50 @@ class WorldOfWarcraft extends Service
     /**
      * Get guild profile
      *
-     * The guild profile API is the primary way to access guild information. This guild profile API can be used to fetch
-     * a single guild at a time through an HTTP GET request to a url describing the guild profile resource. By default,
-     * a basic dataset will be returned and with each request and zero or more additional fields can be retrieved.
+     * The guild profile API is the primary way to access guild information. This API can fetch a single guild at a time through
+     * an HTTP GET request to a URL describing the guild profile resource. By default, these requests return a basic dataset and
+     * each request can retrieve zero or more additional fields.
      *
-     * There are no required query string parameters when accessing this resource, although the fields query string
-     * parameter can optionally be passed to indicate that one or more of the optional datasets is to be retrieved.
-     * Those additional fields are listed in the method titled "Optional Fields".
+     * Although this endpoint has no required query string parameters, requests can optionally pass the fields query string parameter
+     * to indicate that one or more of the optional datasets is to be retrieved. Those additional fields are listed in the method
+     * titled "Optional Fields".
+     *
+     * List of possible values in '$fields' variable:
+     * - ''             - Returns a basic guild data.
+     * - 'members'      - A value of members tells the API to include guild's member list in the response.
+     * - 'achievements' - A set of data structures that describe the achievements earned by the guild.
+     *                    When requesting achievement data, several sets of data will be returned.
+     *
+     *                    - **achievementsCompleted**         : a list of achievement IDs.
+     *                    - **achievementsCompletedTimestamp**: a list of timestamps corresponding to the achievement IDs in the **achievementsCompleted** list. The value of each timestamp indicates when the related achievement was earned by the guild.
+     *                    - **criteria**                      : a list of criteria IDs used to determine the partial completeness of guild achievements.
+     *                    - **criteriaQuantity**              : a list of values associated with a given achievement criteria. The position of a value corresponds to the position of a given achievement criteria.
+     *                    - **criteriaTimestamp**             : a list of timestamps with values that represent when the criteria was considered complete. The position of a value corresponds to the position of a given achievement criteria.
+     *                    - **criteriaCreated**               : a list of timestamps for which the value represents the time the criteria was considered started. The position of a value corresponds to the position of a given achievement criteria.
+     * - 'news'         - A set of data structures that describe the guild's news feed. When the news feed is requested,
+     *                    this resource returns a list of news objects. Each one has a type, a timestamp, and some other data depending
+     *                    on the type: itemId, an achievement object, and so on.
+     * - 'challenge'    - The top three challenge mode guild run times for each challenge mode map.
      *
      * @param string $realm     The realm the guild lives on
      * @param string $guildName Name of the guild being queried
+     * @param string $fields    List of guild fields separated by comma (f.e. 'items,mounts,pets,guild')
      * @param array  $options   Options
      *
      * @return ResponseInterface
      */
-    public function getGuild($realm, $guildName, array $options = [])
+    public function getGuildProfile($realm, $guildName, $fields = '', array $options = [])
     {
+        $fieldsQueryParam = [
+            'fields' => $fields,
+        ];
+
+        if (isset($options['query'])) {
+            $options['query'] += $fieldsQueryParam;
+        } else {
+            $options['query'] = $fieldsQueryParam;
+        }
+
         return $this->request('/guild/'.(string) $realm.'/'.(string) $guildName, $options);
     }
 
@@ -185,9 +266,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get item information by ID
      *
-     * The item API provides detailed item information. This includes item set information if this item is part of a set.
+     * The item API provides detailed item information, including item set information.
      *
-     * @param int   $itemId  Unique ID of the item being requested
+     * @param int   $itemId  The requested item's unique ID.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -200,9 +281,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get set information by ID
      *
-     * The item API provides detailed item information. This includes item set information if this item is part of a set.
+     * The item API provides detailed item information, including item set information.
      *
-     * @param int   $setId   Unique ID of the set being requested
+     * @param int   $setId   The requested set's unique ID.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -219,7 +300,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get mount master list
      *
-     * A list of all supported mounts
+     * Returns a list of all supported mounts.
      *
      * @param array $options Options
      *
@@ -235,26 +316,25 @@ class WorldOfWarcraft extends Service
     // region Pet API
 
     /**
-     * Get pet lists
+     * Get pet master lists
      *
-     * A list of all supported battle and vanity pets
+     * Returns a list of all supported battle and vanity pets.
      *
      * @param array $options Options
      *
      * @return ResponseInterface
      */
-    public function getPetList(array $options = [])
+    public function getPetMasterList(array $options = [])
     {
         return $this->request('/pet/', $options);
     }
 
     /**
-     * Get pet ability information by ID
+     * Get pet ability by ID
      *
-     * This provides data about a individual battle pet ability ID. We do not provide the tooltip for the ability yet.
-     * We are working on a better way to provide this since it depends on your pet's species, level and quality rolls.
+     * Returns data about a individual battle pet ability ID. This resource does not provide ability tooltips.
      *
-     * @param int   $abilityId The ID of the ability you want to retrieve
+     * @param int   $abilityId The ID of the ability to retrieve.
      * @param array $options   Options
      *
      * @return ResponseInterface
@@ -265,12 +345,12 @@ class WorldOfWarcraft extends Service
     }
 
     /**
-     * Get pet species information by ID
+     * Get pet species by ID
      *
-     * This provides the data about an individual pet species. The species IDs can be found your character profile
-     * using the options pets field. Each species also has data about what it's 6 abilities are.
+     * Returns data about an individual pet species. Use pets as the field value in a character profile request to get species IDs.
+     * Each species also has data about its six abilities.
      *
-     * @param int   $speciesId The species you want to retrieve data on
+     * @param int   $speciesId The species for which to retrieve data.
      * @param array $options   Options
      *
      * @return ResponseInterface
@@ -281,17 +361,41 @@ class WorldOfWarcraft extends Service
     }
 
     /**
-     * Get pet stats by species ID
+     * Get pet stats by ID
      *
-     * Retrieve detailed information about a given species of pet
+     * Returns detailed information about a given species of pet.
      *
-     * @param int   $speciesId The pet's species ID. This can be found by querying a users' list of pets via the Character Profile API
+     * @param int   $speciesId The pet's species ID. This can be found by querying a user's list of pets via the Character Profile API.
+     * @param int   $level     (optional) The pet's level. Pet levels max out at 25. If omitted, the API assumes a default value of 1.
+     * @param int   $breedId   (optional) The pet's breed. Retrievable via the Character Profile API. If omitted the API assumes a default value of 3.
+     * @param int   $qualityId (optional) The pet's quality. Retrievable via the Character Profile API. Pet quality can range from 0 to 5
+     *                         (0 is poor quality and 5 is legendary). If omitted, the API will assume a default value of 1.
      * @param array $options   Options
      *
      * @return ResponseInterface
      */
-    public function getPetStats($speciesId, array $options = [])
+    public function getPetStats($speciesId, $level = null, $breedId = null, $qualityId = null, array $options = [])
     {
+        $queryParams = [];
+
+        if ($level !== null) {
+            $queryParams['level'] = $level;
+        }
+        if ($breedId !== null) {
+            $queryParams['breedId'] = $breedId;
+        }
+        if ($qualityId !== null) {
+            $queryParams['qualityId'] = $qualityId;
+        }
+
+        if (isset($options['query'])) {
+            $options['query'] += $queryParams;
+        } else {
+            $options['query'] = $queryParams;
+        }
+
+        var_dump($options);
+
         return $this->request('/pet/stats/'.(int) $speciesId, $options);
     }
 
@@ -302,10 +406,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get leaderboards
      *
-     * The Leaderboard API endpoint provides leaderboard information for the 2v2, 3v3, 5v5 and Rated Battleground
-     * leaderboards.
+     * The Leaderboard API endpoint provides leaderboard information for the 2v2, 3v3, 5v5, and Rated Battleground leaderboards.
      *
-     * @param int   $bracket The type of leaderboard you want to retrieve. Valid entries are 2v2, 3v3, 5v5, and rbg
+     * @param int   $bracket The type of leaderboard to retrieve. Valid entries are **2v2**, **3v3**, **5v5**, and **rbg**.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -322,9 +425,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get quest information by ID
      *
-     * Retrieve metadata for a given quest.
+     * Returns metadata for a specified quest.
      *
-     * @param int   $questId The ID of the desired quest
+     * @param int   $questId The ID of the quest to retrieve.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -341,16 +444,29 @@ class WorldOfWarcraft extends Service
     /**
      * Get realm status
      *
-     * The realm status API allows developers to retrieve realm status information. This information is limited to
-     * whether or not the realm is up, the type and state of the realm, the current population, and the status of the
-     * two world PvP zones
+     * The realm status API allows developers to retrieve realm status information. This information is limited to whether or not
+     * the realm is up, the type and state of the realm, and the current population.
      *
-     * @param array $options Options
+     * Although this endpoint has no required query string parameters, use the optional **realms** parameter to limit the realms
+     * returned to a specific set of realms.
+     *
+     * @param string $realms  List of realms separated by comma (f.e. 'greymane,aegwynn')
+     * @param array  $options Options
      *
      * @return ResponseInterface
      */
-    public function getRealmStatus(array $options = [])
+    public function getRealmStatus($realms = '', array $options = [])
     {
+        $queryParams = [
+            'realms' => $realms,
+        ];
+
+        if (isset($options['query'])) {
+            $options['query'] += $queryParams;
+        } else {
+            $options['query'] = $queryParams;
+        }
+
         return $this->request('/realm/status', $options);
     }
 
@@ -361,9 +477,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get recipe information by ID
      *
-     * The recipe API provides basic recipe information
+     * Returns basic recipe information.
      *
-     * @param int   $recipeId Unique ID for the desired recipe
+     * @param int   $recipeId Unique ID for the desired recipe.
      * @param array $options  Options
      *
      * @return ResponseInterface
@@ -380,9 +496,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get spell information by ID
      *
-     * The spell API provides some information about spells
+     * Returns information about spells.
      *
-     * @param int   $spellId Unique ID of the desired spell
+     * @param int   $spellId The ID of the spell to retrieve.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -399,9 +515,8 @@ class WorldOfWarcraft extends Service
     /**
      * Get zone master list
      *
-     * A list of all supported zones and their bosses. A 'zone' in this context should be considered a dungeon, or a
-     * raid, not a zone as in a world zone. A 'boss' in this context should be considered a boss encounter, which may
-     * include more than one NPC.
+     * Returns a list of all supported zones and their bosses. A "zone" in this context should be considered a dungeon or a raid, not
+     * a world zone. A "boss" in this context should be considered a boss encounter, which may include more than one NPC.
      *
      * @param array $options Options
      *
@@ -415,9 +530,9 @@ class WorldOfWarcraft extends Service
     /**
      * Get zone information by ID
      *
-     * The Zone API provides some information about zones.
+     * Returns information about zones.
      *
-     * @param int   $zoneId  The ID of the zone you want to retrieve
+     * @param int   $zoneId  The ID of the zone to retrieve.
      * @param array $options Options
      *
      * @return ResponseInterface
@@ -434,7 +549,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data battlegroups
      *
-     * The battlegroups data API provides the list of battlegroups for this region. Please note the trailing '/' on this URL
+     * Returns a list of battlegroups for the specified region. Note the trailing / on this request path.
      *
      * @param array $options Options
      *
@@ -448,7 +563,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data character races
      *
-     * The character races data API provides a list of each race and their associated faction, name, unique ID, and skin
+     * Returns a list of races and their associated faction, name, unique ID, and skin.
      *
      * @param array $options Options
      *
@@ -462,7 +577,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data character classes
      *
-     * The character classes data API provides a list of character classes
+     * Returns a list of character classes.
      *
      * @param array $options Options
      *
@@ -476,8 +591,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data character achievements
      *
-     * The character achievements data API provides a list of all of the achievements that characters can earn as well
-     * as the category structure and hierarchy
+     * Returns a list of all achievements that characters can earn as well as the category structure and hierarchy.
      *
      * @param array $options Options
      *
@@ -491,7 +605,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data guild rewards
      *
-     * The guild rewards data API provides a list of all guild rewards
+     * The guild rewards data API provides a list of all guild rewards.
      *
      * @param array $options Options
      *
@@ -505,7 +619,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data guild perks
      *
-     * The guild perks data API provides a list of all guild perks
+     * Returns a list of all guild perks.
      *
      * @param array $options Options
      *
@@ -519,8 +633,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data guild achievements
      *
-     * The guild achievements data API provides a list of all of the achievements that guilds can earn as well as the
-     * category structure and hierarchy
+     * Returns a list of all guild achievements as well as the category structure and hierarchy.
      *
      * @param array $options Options
      *
@@ -534,7 +647,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data item classes
      *
-     * The item classes data API provides a list of item classes
+     * Returns a list of item classes.
      *
      * @param array $options Options
      *
@@ -548,7 +661,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data talents
      *
-     * The talents data API provides a list of talents, specs and glyphs for each class
+     * Returns a list of talents, specs, and glyphs for each class.
      *
      * @param array $options Options
      *
@@ -562,7 +675,7 @@ class WorldOfWarcraft extends Service
     /**
      * Get data pet types
      *
-     * The different bat pet types (including what they are strong and weak against)
+     * Returns a list of the different battle pet types, including what they are strong and weak against.
      *
      * @param array $options Options
      *
@@ -574,29 +687,4 @@ class WorldOfWarcraft extends Service
     }
 
     // endregion Data resources API
-
-    // region Community OAuth API
-
-    /**
-     * Get profile characters
-     *
-     * This provides data about the current logged in OAuth user's WoW profile
-     *
-     * @param null|string $accessToken Authorized user access token
-     * @param array       $options     Options
-     *
-     * @return ResponseInterface
-     */
-    public function getProfileCharacters($accessToken = null, array $options = [])
-    {
-        if (null === $accessToken) {
-            $options['access_token'] = $this->blizzardClient->getAccessToken();
-        } else {
-            $options['access_token'] = $accessToken;
-        }
-
-        return $this->request('/user/characters', $options);
-    }
-
-    // endregion Community OAuth API
 }
