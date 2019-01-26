@@ -7,7 +7,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 $client = new \BlizzardApi\BlizzardClient('clientId', 'clientSecret');
 
 // Create a new World Of Warcraft service with configured Blizzard client
-$wow = new \BlizzardApi\Service\WorldOfWarcraft($client);
+$wow = new \BlizzardApi\Service\WorldOfWarcraftCommunity($client);
 
 // Use API method for getting specific data
 $response = $wow->getGuildProfile('test-realm', 'test-guild', implode(',', ['achievements', 'challenge']));

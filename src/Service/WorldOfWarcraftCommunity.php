@@ -5,11 +5,11 @@ namespace BlizzardApi\Service;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class World Of Warcraft
+ * Class World Of Warcraft Community APIs
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class WorldOfWarcraft extends Service
+class WorldOfWarcraftCommunity extends Service
 {
     /**
      * {@inheritdoc}
