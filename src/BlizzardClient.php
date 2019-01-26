@@ -2,8 +2,8 @@
 
 namespace BlizzardApi;
 
+use BlizzardApi\Service\OAuth;
 use BlizzardApi\Tokens\Access;
-use GuzzleHttp\Client;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +15,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BlizzardClient
 {
-    const API_URL_PATTERN              = 'https://region.api.battle.net';
+    const API_URL_PATTERN              = 'https://region.api.blizzard.com';
+    const CHINA_API_URL                = 'https://gateway.battlenet.com.cn';
     const API_ACCESS_TOKEN_URL_PATTERN = 'https://region.battle.net/oauth/token';
 
     /**
@@ -29,9 +30,14 @@ class BlizzardClient
     private $apiAccessTokenUrl;
 
     /**
-     * @var string $apiKey API key
+     * @var string $clientId Client ID
      */
-    private $apiKey;
+    private $clientId;
+
+    /**
+     * @var string $clientSecret Client Secret
+     */
+    private $clientSecret;
 
     /**
      * @var Access[] $accessTokens Access tokens
@@ -51,18 +57,18 @@ class BlizzardClient
     /**
      * Constructor
      *
-     * @param string $apiKey    API key
-     * @param string $apiSecret API Secret key
-     * @param string $region    Region
-     * @param string $locale    Locale
+     * @param string $clientId     Access token
+     * @param string $clientSecret API Secret key
+     * @param string $region       Region
+     * @param string $locale       Locale
      */
-    public function __construct($apiKey, $apiSecret, $region = 'us', $locale = 'en_us')
+    public function __construct($clientId, $clientSecret, $region = 'us', $locale = 'en_us')
     {
         $options = [
-            'apiKey'    => $apiKey,
-            'apiSecret' => $apiSecret,
-            'region'    => strtolower($region),
-            'locale'    => strtolower($locale),
+            'clientId'     => $clientId,
+            'clientSecret' => $clientSecret,
+            'region'       => strtolower($region),
+            'locale'       => strtolower($locale),
         ];
 
         $resolver = new OptionsResolver();
@@ -70,8 +76,8 @@ class BlizzardClient
 
         $options = $resolver->resolve($options);
 
-        $this->apiKey = $options['apiKey'];
-        $this->apiSecret = $options['apiSecret'];
+        $this->clientId = $options['clientId'];
+        $this->clientSecret = $options['clientSecret'];
         $this->region = $options['region'];
         $this->locale = $options['locale'];
 
@@ -100,49 +106,49 @@ class BlizzardClient
     }
 
     /**
-     * Get api key
+     * Get client ID
      *
-     * @return string Api key
+     * @return string Client ID
      */
-    public function getApiKey()
+    public function getClientId()
     {
-        return $this->apiKey;
+        return $this->clientId;
     }
 
     /**
-     * Set api key
+     * Set client ID
      *
-     * @param string $apiKey Api key
+     * @param string $clientId Client ID
      *
      * @return $this
      */
-    public function setApiKey($apiKey)
+    public function setClientId($clientId)
     {
-        $this->apiKey = $apiKey;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
     /**
-     * Get api secret
+     * Get client secret
      *
-     * @return string Api secret
+     * @return string Client secret
      */
-    public function getApiSecret()
+    public function getClientSecret()
     {
-        return $this->apiSecret;
+        return $this->clientSecret;
     }
 
     /**
-     * Set api secret
+     * Set client secret
      *
-     * @param string $apiSecret Api secret
+     * @param string $clientSecret Client secret
      *
      * @return $this
      */
-    public function setApiSecret($apiSecret)
+    public function setClientSecret($clientSecret)
     {
-        $this->apiSecret = $apiSecret;
+        $this->clientSecret = $clientSecret;
 
         return $this;
     }
@@ -154,7 +160,7 @@ class BlizzardClient
      */
     public function getRegion()
     {
-        return strtolower($this->region);
+        return $this->region;
     }
 
     /**
@@ -181,7 +187,7 @@ class BlizzardClient
      */
     public function getLocale()
     {
-        return strtolower($this->locale);
+        return $this->locale;
     }
 
     /**
@@ -202,6 +208,9 @@ class BlizzardClient
      * Get access token
      *
      * @return null|string Access token
+     *
+     * @throws \BlizzardApi\Tokens\Exceptions\Expired
+     * @throws \HttpResponseException
      */
     public function getAccessToken()
     {
@@ -210,7 +219,9 @@ class BlizzardClient
         }
 
         if (!array_key_exists($this->getRegion(), $this->accessTokens)) {
-            $this->accessTokens[$this->getRegion()] = $this->requestAccessToken();
+            $oauth = new OAuth($this);
+
+            $this->accessTokens[$this->getRegion()] = $oauth->requestAccessToken();
         }
 
         return $this->accessTokens[$this->getRegion()]->getToken();
@@ -241,7 +252,11 @@ class BlizzardClient
      */
     private function updateApiUrl($region)
     {
-        $this->apiUrl = str_replace('region', strtolower($region), self::API_URL_PATTERN);
+        if ($region === 'cn') {
+            $this->apiUrl = self::CHINA_API_URL;
+        } else {
+            $this->apiUrl = str_replace('region', strtolower($region), self::API_URL_PATTERN);
+        }
 
         return $this;
     }
@@ -284,38 +299,12 @@ class BlizzardClient
             );
         }
 
-        $resolver->setRequired(['apiKey', 'apiSecret', 'region', 'locale'])
-                 ->setAllowedTypes('apiKey', 'string')
-                 ->setAllowedTypes('apiSecret', 'string')
-                 ->setAllowedTypes('region', 'string')
-                 ->setAllowedValues('region', array_keys(GeoData::$list))
-                 ->setAllowedTypes('locale', 'string')
-                 ->setAllowedValues('locale', $locales);
-    }
-
-    /**
-     * Request an Access Token from Blizzard
-     *
-     * @return Access
-     *
-     * @throws \HttpResponseException
-     */
-    protected function requestAccessToken()
-    {
-        $options = [
-            'form_params' => [
-                'grant_type'    => 'client_credentials',
-                'client_id'     => $this->getApiKey(),
-                'client_secret' => $this->getApiSecret(),
-            ],
-        ];
-
-        $result = (new Client())->post($this->getApiAccessTokenUrl(), $options);
-
-        if (200 === $result->getStatusCode()) {
-            return Access::fromJson(json_decode($result->getBody()->getContents()));
-        } else {
-            throw new \HttpResponseException('Invalid Response');
-        }
+        $resolver->setRequired(['clientId', 'clientSecret', 'region', 'locale'])
+            ->setAllowedTypes('clientId', 'string')
+            ->setAllowedTypes('clientSecret', 'string')
+            ->setAllowedTypes('region', 'string')
+            ->setAllowedValues('region', array_keys(GeoData::$list))
+            ->setAllowedTypes('locale', 'string')
+            ->setAllowedValues('locale', $locales);
     }
 }

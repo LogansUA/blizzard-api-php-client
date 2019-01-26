@@ -49,13 +49,13 @@ class Service
             'base_uri' => $this->blizzardClient->getApiUrl(),
         ]);
 
-        $options = $this->generateQueryOptions($options);
+        $options = $this->generateRequestOptions($options);
 
         return $client->get($this->serviceParam.$urlSuffix, $options);
     }
 
     /**
-     * Generate query options
+     * Generate request options
      *
      * Setting default option to given options array if it does have 'query' key,
      * otherwise creating 'query' key with default options
@@ -64,15 +64,31 @@ class Service
      *
      * @return array
      */
-    private function generateQueryOptions(array $options = [])
+    private function generateRequestOptions(array $options = [])
     {
-        if (isset($options['query'])) {
-            $result = $options['query'] + $this->getDefaultOptions();
+        $result = [];
+
+        if (isset($options['query']) || isset($options['headers'])) {
+            if (isset($options['query'])) {
+                $result['query'] = $options['query'] + $this->getQueryDefaultOptions();
+            }
+
+            if (isset($options['headers'])) {
+                $result['headers'] = $options['headers'] + $this->getHeadersDefaultOptions();
+            }
         } else {
-            $result['query'] = $options + $this->getDefaultOptions();
+            $result = $options + $this->getDefaultRequestOptions();
         }
 
         return $result;
+    }
+
+    private function getDefaultRequestOptions()
+    {
+        return [
+            'query'   => $this->getQueryDefaultOptions(),
+            'headers' => $this->getHeadersDefaultOptions(),
+        ];
     }
 
     /**
@@ -82,11 +98,24 @@ class Service
      *
      * @return array
      */
-    private function getDefaultOptions()
+    private function getQueryDefaultOptions()
     {
         return [
             'locale' => $this->blizzardClient->getLocale(),
-            'apiKey' => $this->blizzardClient->getApiKey(),
+        ];
+    }
+
+    /**
+     * Get headers default options
+     *
+     * Get default headers options from configured Blizzard Client
+     *
+     * @return array
+     */
+    private function getHeadersDefaultOptions()
+    {
+        return [
+            'authorization' => 'bearer '.$this->blizzardClient->getAccessToken(),
         ];
     }
 }
