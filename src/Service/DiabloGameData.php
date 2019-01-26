@@ -5,11 +5,11 @@ namespace BlizzardApi\Service;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * GameData class
+ * Class Diablo Game Data
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
-class GameData extends Service
+class DiabloGameData extends Service
 {
     // region Game data API
 
@@ -24,8 +24,6 @@ class GameData extends Service
      */
     public function getSeasonIndex(array $options = [])
     {
-        $options['access_token'] = $this->blizzardClient->getAccessToken();
-
         return $this->request('/data/d3/season/', $options);
     }
 
@@ -41,8 +39,6 @@ class GameData extends Service
      */
     public function getSeasonById($id, array $options = [])
     {
-        $options['access_token'] = $this->blizzardClient->getAccessToken();
-
         return $this->request('/data/d3/season/'.(int) $id, $options);
     }
 
@@ -59,8 +55,6 @@ class GameData extends Service
      */
     public function getSeasonLeaderboardById($id, $leaderboard, array $options = [])
     {
-        $options['access_token'] = $this->blizzardClient->getAccessToken();
-
         return $this->request('/data/d3/season/'.(int) $id.'/leaderboard/'.(string) $leaderboard, $options);
     }
 
@@ -75,8 +69,6 @@ class GameData extends Service
      */
     public function getEraIndex(array $options = [])
     {
-        $options['access_token'] = $this->blizzardClient->getAccessToken();
-
         return $this->request('/data/d3/era/', $options);
     }
 
@@ -92,8 +84,6 @@ class GameData extends Service
      */
     public function getEraIndexById($id, array $options = [])
     {
-        $options['access_token'] = $this->blizzardClient->getAccessToken();
-
         return $this->request('/data/d3/era/'.(int) $id, $options);
     }
 
@@ -110,8 +100,6 @@ class GameData extends Service
      */
     public function getEraLeaderboard($id, $leaderboard, array $options = [])
     {
-        $options['access_token'] = $this->blizzardClient->getAccessToken();
-
         return $this->request('/data/d3/era/'.(int) $id.'/leaderboard/'.(string) $leaderboard, $options);
     }
 

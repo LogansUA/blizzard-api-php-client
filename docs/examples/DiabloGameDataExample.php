@@ -7,7 +7,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 $client = new \BlizzardApi\BlizzardClient('clientId', 'clientSecret');
 
 // Create a new GameData service with configured Blizzard client
-$gameData = new \BlizzardApi\Service\GameData($client);
+$gameData = new \BlizzardApi\Service\DiabloGameData($client);
 
 // Use API method for getting specific data
 $response = $gameData->getEraLeaderboard(1, 'rift-barbarian');
