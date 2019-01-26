@@ -15,18 +15,17 @@ class GeoData
     static public $list = [
         'eu' => [
             'en_gb',
-            'de_de',
             'es_es',
             'fr_fr',
-            'it_it',
-            'pl_pl',
-            'pt_pt',
             'ru_ru',
+            'de_de',
+            'pt_pt',
+            'it_it',
         ],
         'us' => [
             'en_us',
-            'pt_br',
             'es_mx',
+            'pt_br',
         ],
         'kr' => [
             'ko_kr',
@@ -34,8 +33,8 @@ class GeoData
         'tw' => [
             'zh_tw',
         ],
-        'sea' => [
-            'en_us',
+        'cn' => [
+            'zh_cn',
         ],
     ];
 }
