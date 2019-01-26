@@ -5,7 +5,7 @@ namespace BlizzardApi\Service;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Starcraft class
+ * Class Starcraft
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */

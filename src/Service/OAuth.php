@@ -5,6 +5,11 @@ namespace BlizzardApi\Service;
 use BlizzardApi\Tokens\Access;
 use GuzzleHttp\Client;
 
+/**
+ * Class OAuth
+ *
+ * @author Oleg Kachinsky <logansoleg@gmail.com>
+ */
 class OAuth extends Service
 {
     /**

@@ -5,7 +5,7 @@ namespace BlizzardApi\Service;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class CommunityOAuth
+ * Class Community OAuth
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */

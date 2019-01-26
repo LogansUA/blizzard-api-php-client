@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class Abstract Service
+ * Class Service
  *
  * @author Oleg Kachinsky <logansoleg@gmail.com>
  */
